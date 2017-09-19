@@ -39,7 +39,7 @@ def projOne():
     points += pointGain
     print("You gained " + str(pointGain) + ", your total point count is " + str(points) + ".")
 
-    print("You see Professor Oak run towards you as you approach the grass.)
+    print("You see Professor Oak run towards you as you approach the grass.")
     print("Professor Oak: 'Wait, " + name + " don't go there! Wild Pokemon live there. You must have a Pokemon to protect yourself. Come to my lab and I will give you one alongside my grandson" + rivalsName + ".")
     input("Press enter to walk into Oak's lab.")
     points += pointGain
@@ -62,7 +62,7 @@ def projOne():
 
     print(rivalsName + ": Wait up, we just got our Pokemon, let's battle!")
     input("Press enter to send out " + playersPokemon + " to start the battle.")
-    points +=  pointGain
+    points += pointGain
     print("You gained " + str(pointGain) + ", your total point count is " + str(points) + ".")
 
     print("-------------------------------------------------------------------")
@@ -83,4 +83,6 @@ def projOne():
     print(rivalsPokemon + " fainted!")
 
     print("Congratulations, you won the battle!")
-    print("Your total point count is " + points + ".")
+    print("Your total point count is " + str(points) + ".")
+
+    print("Copywrite (c) 2107 Daniel Petruso, daniel.petruso1@marist.edu")

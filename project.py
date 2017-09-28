@@ -1,23 +1,10 @@
 #Dan Petruso
-def projOne():
 
-    #program emulates the introduction to the first Pokemon game
-    
-    name = "Red"
-    rivalsName = "Blue"
-
-    points = 0
-    pointGain = 10
-    
-    playersPokemon = "Charmander"
-    rivalsPokemon = "Squirtle"
-
-    attack1 = "Scratch"
-    attack2 = "Tackle"
-    
+def intro():
     print("This is a game where you will choose your first Pokemon.")
     print("Every new move you will gain " + str(pointGain) + " points.")
-    print("Professor Oak: 'Welcome to the world of Pokemon, what is your name?'")
+
+    print("Professor Oak: 'Welcome to the world of Pokemon, what is your name?")
     
     input("Press enter to respond.")
     points += pointGain
@@ -31,6 +18,30 @@ def projOne():
     print("Professor Oak: 'Oh yes, it was " + rivalsName + ". Great! Now you have begun your journey!'")
 
     print("-------------------------------------------------------------------")
+
+def getCopyright():
+    print("Copywrite (c) 2107 Daniel Petruso, daniel.petruso1@marist.edu")
+    
+def proj():
+    
+    name = "Red"
+    rivalsName = "Blue"
+
+    loc0, loc1, loc2, loc3, loc4, loc5 = False
+    
+    points = 0
+    pointGain = 10
+    
+    playersPokemon = "Charmander"
+    rivalsPokemon = "Squirtle"
+
+    attack1 = "Scratch"
+    attack2 = "Tackle"
+
+    location = [  ]
+
+    intro()
+    
     input("You are now in your room, press enter to continue.")
     points += pointGain
     print("You gained " + str(pointGain) + ", your total point count is " + str(points) + ".")
@@ -84,5 +95,7 @@ def projOne():
 
     print("Congratulations, you won the battle!")
     print("Your total point count is " + str(points) + ".")
-
-    print("Copywrite (c) 2107 Daniel Petruso, daniel.petruso1@marist.edu")
+    
+    getCopyright()
+    
+proj()

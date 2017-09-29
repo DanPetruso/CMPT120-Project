@@ -4,6 +4,7 @@ loc0, loc1, loc2, loc3, loc4, loc5 = False, False, False, False, False, False
 pointGain = 5
 
 def intro():
+    print("Choose Your Pokemon!")
     print("This is a game where you will choose your first Pokemon and start your first battle.")
     print("Every new move you will gain", pointGain, "points.")
 

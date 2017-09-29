@@ -43,32 +43,32 @@ def pointChecker(count):
     if count == 0 and loc0 == False:
         points += pointGain
         loc0 = True
-        print("Points gained:", pointGain, "\nPoint total:", points)
+        print("Points gained:", pointGain)
         
     if count == 1 and loc1 == False:
         points += pointGain
         loc1 = True
-        print("Points gained:", pointGain, "\nPoint total:", points)
+        print("Points gained:", pointGain)
         
     if count == 2 and loc2 == False:
         points += pointGain
         loc2 = True
-        print("Points gained:", pointGain, "\nPoint total:", points)
+        print("Points gained:", pointGain)
         
     if count == 3 and loc3 == False:
         points += pointGain
         loc3 = True
-        print("Points gained:", pointGain, "\nPoint total:", points)
+        print("Points gained:", pointGain)
         
     if count == 4 and loc4 == False:
         points += pointGain
         loc4 = True
-        print("Points gained:", pointGain, "\nPoint total:", points)
+        print("Points gained:", pointGain)
         
     if count == 5 and loc5 == False:
         points += pointGain
         loc5 = True
-        print("Points gained:", pointGain, "\nPoint total:", points)
+        print("Points gained:", pointGain)
 
 
 def getPoints():
@@ -78,16 +78,16 @@ def getPoints():
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def game(playerName, rivalName):
-    location = [ "You are now in your bedroom. \nTo your east is the door to your living room.",#0
-                 "You are now in your living room. \nTo the south is the front door. \nTo the west is the door to your bedroom.",#1
-                 "You are now outside. \nTo your east is the tall grass. \nTo your north is your house.",#2
+    location = [ "You are now in your bedroom. \nTo your east is the door to your living room. ",#0
+                 "You are now in your living room. \nTo the south is the front door. \nTo the west is the door to your bedroom. ",#1
+                 "You are now outside. \nTo your east is the tall grass. \nTo your north is your house. ",#2
                  "You are now in the tall grass. It is too dangerous to stay here so you will need a Pokemon from Professor Oak to protect yourself."
-                 "\nTo the south is Oak's lab. \nTo the west is your house.",#3
+                 "\nTo the south is Oak's lab. \nTo the west is your house. ",#3
                  "You are now in Oak's lab. He tells you to take the pokeball from the research room to the west.\n"
-                 "To the west is the research room. \nTo the north is the exit.",#4
+                 "To the west is the research room. \nTo the north is the exit. ",#4
                  "You are now in the research room and just picked up your pokeball. " + rivalName +  " wants to battle.\n"
-                 "To the south is the battle arena. \nTo the east is the lab.",#5
-                 "You entered the battle arena and started your first battle."] #6
+                 "To the south is the battle arena. \nTo the east is the lab. ",#5
+                 "You entered the battle arena and started your first battle. "] #6
     
     gameFinished = False
     locCount = 0
@@ -115,6 +115,8 @@ def game(playerName, rivalName):
 
                 else:
                     getErrorMessage()
+                print("Point total:", getPoints())
+                
 
         #Location1: Living Room
         if locCount == 1:
@@ -141,6 +143,7 @@ def game(playerName, rivalName):
 
                 else:
                     getErrorMessage()
+                print("Point total:", getPoints())
 
 
         #Location2: Outside
@@ -154,7 +157,7 @@ def game(playerName, rivalName):
                     locCount-=1
 
                 elif choice.lower() == "east":
-                    print("You headed towards the tall grass. \n\n")
+                    print("You headed towards the tall grass.\n\n")
                     pointChecker(locCount)
                     locCount+=1
                     
@@ -168,6 +171,7 @@ def game(playerName, rivalName):
 
                 else:
                     getErrorMessage()
+                print("Point total:", getPoints())
 
 
         #Location3: Tall Grass
@@ -195,6 +199,7 @@ def game(playerName, rivalName):
 
                 else:
                     getErrorMessage()
+                print("Point total:", getPoints())
 
 
         #Location4: Oak's Lab
@@ -222,6 +227,7 @@ def game(playerName, rivalName):
 
                 else:
                     getErrorMessage()
+                print("Point total:", getPoints())
 
 
         #Location5: Reseach Room
@@ -249,6 +255,7 @@ def game(playerName, rivalName):
 
                 else:
                     getErrorMessage()
+                print("Point total:", getPoints())
 
 
         #Locaton6: Battle Arena and end of game

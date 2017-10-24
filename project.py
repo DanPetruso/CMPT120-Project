@@ -1,6 +1,7 @@
 #Dan Petruso
+#CMPT 120L 113
 points = 0
-loc0, loc1, loc2, loc3, loc4, loc5 = False, False, False, False, False, False
+visitedLocation = [False, False, False, False, False, False, False, False]
 pointGain = 5
 
 def intro():
@@ -34,40 +35,50 @@ def getErrorMessage():
 
 def pointChecker(count):
     global points
-    global loc0, loc1, loc2, loc3, loc4, loc5
+    global visitedLocation
     global pointGain
 
     if count == -1: #gives total amount of points to user
         return points
     
-    if count == 0 and loc0 == False:
+    if count == 0 and visitedLocation[0] == False:
         points += pointGain
-        loc0 = True
+        visitedLocation[0] = True
         print("Points gained:", pointGain)
         
-    if count == 1 and loc1 == False:
+    if count == 1 and visitedLocation[1] == False:
         points += pointGain
-        loc1 = True
+        visitedLocation[1] = True
         print("Points gained:", pointGain)
         
-    if count == 2 and loc2 == False:
+    if count == 2 and visitedLocation[2] == False:
         points += pointGain
-        loc2 = True
+        visitedLocation[2] = True
         print("Points gained:", pointGain)
         
-    if count == 3 and loc3 == False:
+    if count == 3 and visitedLocation[3] == False:
         points += pointGain
-        loc3 = True
+        visitedLocation[3] = True
         print("Points gained:", pointGain)
         
-    if count == 4 and loc4 == False:
+    if count == 4 and visitedLocation[4] == False:
         points += pointGain
-        loc4 = True
+        visitedLocation[4] = True
         print("Points gained:", pointGain)
         
-    if count == 5 and loc5 == False:
+    if count == 5 and visitedLocation[5] == False:
         points += pointGain
-        loc5 = True
+        visitedLocation[5] = True
+        print("Points gained:", pointGain)
+
+    if count == 6 and visitedLocation[6] == False:
+        points += pointGain
+        visitedLocation[6] = True
+        print("Points gained:", pointGain)
+
+    if count == 7 and visitedLocation[7] == False:
+        points += pointGain
+        visitedLocation[7] = True
         print("Points gained:", pointGain)
 
 
@@ -87,7 +98,11 @@ def game(playerName, rivalName):
                  "To the west is the research room. \nTo the north is the exit. ",#4
                  "You are now in the research room and just picked up your pokeball. " + rivalName +  " wants to battle.\n"
                  "To the south is the battle arena. \nTo the east is the lab. ",#5
-                 "You entered the battle arena and started your first battle. "] #6
+                 "You entered the battle arena and started your first battle. \n" + playerName + " sent out Charmander. " + rivalName + " sent out Squirtle."
+                 "\nSquirtle used tackle. Charmander used scratch. Charmander won the battle!"
+                 "\nCharmander is now tired and would like to rest up at the Pokemon Center. \nTo the west is the,"#6
+                 ""#7
+                 ]
     
     gameFinished = False
     locCount = 0
@@ -260,9 +275,12 @@ def game(playerName, rivalName):
 
         #Locaton6: Battle Arena and end of game
         if locCount == 6:
-            print(location[6])
-            print("Congratulations " + playerName + " you won the game with " + str(getPoints()) + " points!")
-            gameFinished = True
+
+            while locCount == 6:
+                print(location[6])
+                print(playerName, "sent out Charmander.", rivalName, "sent out Squirtle."
+                      "\nSquirtle used tackle. Charmander used scratch. Charmander won the battle!")
+                gameFinished = True
 
         
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------

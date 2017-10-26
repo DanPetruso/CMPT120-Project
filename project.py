@@ -48,13 +48,34 @@ def messageSorter(choice):
         locCount = -1 #breaks out of initial loop
 
     elif choice.lower() == "points":
-        print("Point total:", getPoints())
+        getPoints()
 
     elif choice.lower() == "north" or choice.lower() == "south" or choice.lower() == "east" or choice.lower() == "west":
         getWrongWay()
 
+    elif choice.lower() == "map":
+        getMap()
+
     else:
         getErrorMessage()
+
+
+def getMap():
+    print("\nMap:\n"
+          "                           Bedroom ----- Living Room                    \n"
+          "                                               |                        \n"
+          "                                               |                        \n"
+          "                                   Outside of House ----- Tall Grass    \n"
+          "                                                                 |      \n"
+          "                                                                 |      \n"
+          "   Rivals House ----- PokeMart           Research Room  ----- Oaks Lab  \n"
+          "                        |		        |                          \n"
+          "                        |  		        |                          \n"
+          "                  Pokemon Center ----- Battle Arena                     \n\n")
+
+
+
+        
 
     
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -66,7 +87,7 @@ def pointChecker(count):
     global locCount
 
     if count == -1: #gives total amount of points to user
-        return points
+        print("Total points: " + str(points))
 
     if visitedLocation[locCount] == False:
         points += pointGain
@@ -86,7 +107,7 @@ def game(playerName, rivalName):
     
     location = [ "You are now in your bedroom. \nTo your east is the door to your living room. ",#0
                  "You are now in your living room. \nTo the south is the front door. \nTo the west is the door to your bedroom. ",#1
-                 "You are now outside. \nTo your east is the tall grass. \nTo your north is your house. ",#2
+                 "You are now outside of your house. \nTo your east is the tall grass. \nTo your north is your house. ",#2
                  "You are now in the tall grass. It is too dangerous to stay here so you will need a Pokemon from Professor Oak to protect yourself."
                  "\nTo the south is Oak's lab. \nTo the west is your house. ",#3
                  "You are now in Oak's lab. He tells you to take the pokeball from the research room to the west.\n"
@@ -96,8 +117,11 @@ def game(playerName, rivalName):
                  "You entered the battle arena and started your first battle. \n" + playerName + " sent out Charmander. " + rivalName + " sent out Squirtle."
                  "\nSquirtle used tackle. Charmander used scratch. Charmander won the battle!"
                  "\nCharmander is now tired and would like to rest up at the Pokemon Center. \nTo the west is the Pokemon Center. \nTo the north is the research room."#6
-                 "You arrived at the Pokemon Center and the Nurse Joy healed your Charmander. You have to pick up a package for the professor at the PokeMart."
-                 "\nTo the north is PokeMart. \nTo the east is the research room."#7
+                 "You arrived at the Pokemon Center and Nurse Joy healed your Charmander. You have to pick up a package for the professor at the PokeMart."
+                 "\nTo the north is PokeMart. \nTo the east is the research room.",#7
+                 "You arrived at the PokeMart and received the package. Professor Oak wants you to give it to him at " + rivalName + "'s house."
+                 "\nTo the west is " + rivalName + "'s house. \nTo the south is the Pokemon Center."#8
+                 "You arrived at " + rivalName + "'s house and delivered the package. Thanks for playing!" #9
                  ]
 
     global gameFinished
@@ -191,17 +215,51 @@ def game(playerName, rivalName):
             else:
                 messageSorter(choice)
 
-        #Locaton6: Battle Arena and end of game
+        #Locaton6: Battle Arena 
         while locCount == 6:
             chioce = input(location[6])
             
-            print(playerName, "sent out Charmander.", rivalName, "sent out Squirtle."
-                  "\nSquirtle used tackle. Charmander used scratch. Charmander won the battle!")
+            if choice.lower() == "north":
+                goto(5)
 
-            if choice.lower() = "north":
+            elif choice.lower() == "west":
                 goto(7)
 
-            elif choice.lower() = "":
+            else:
+                messageSorter(choice)
+
+        #Location7: Pokemon Center
+        while locCount == 7:
+            chioce = input(location[7])
+            
+            if choice.lower() == "east":
+                goto(6)
+
+            elif choice.lower() == "north":
+                goto(8)
+
+            else:
+                messageSorter(choice)
+
+        #Location8: PokeMart
+        while locCount == 8:
+            chioce = input(location[8])
+            
+            if choice.lower() == "north":
+                goto(7)
+
+            elif choice.lower() == "west":
+                goto(9)
+
+            else:
+                messageSorter(choice)
+
+        #Location9: Rival's House
+        while locCount == 9:
+            print(location[9])
+            getPoints()
+
+
 
         
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------

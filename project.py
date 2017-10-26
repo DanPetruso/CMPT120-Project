@@ -4,21 +4,7 @@ points = 0
 visitedLocation = [False, False, False, False, False, False, False, False]
 pointGain = 5
 gameFinished = False
-
-location = [ "You are now in your bedroom. \nTo your east is the door to your living room. ",#0
-                 "You are now in your living room. \nTo the south is the front door. \nTo the west is the door to your bedroom. ",#1
-                 "You are now outside. \nTo your east is the tall grass. \nTo your north is your house. ",#2
-                 "You are now in the tall grass. It is too dangerous to stay here so you will need a Pokemon from Professor Oak to protect yourself."
-                 "\nTo the south is Oak's lab. \nTo the west is your house. ",#3
-                 "You are now in Oak's lab. He tells you to take the pokeball from the research room to the west.\n"
-                 "To the west is the research room. \nTo the north is the exit. ",#4
-                 "You are now in the research room and just picked up your pokeball. " + rivalName +  " wants to battle.\n"
-                 "To the south is the battle arena. \nTo the east is the lab. ",#5
-                 "You entered the battle arena and started your first battle. \n" + playerName + " sent out Charmander. " + rivalName + " sent out Squirtle."
-                 "\nSquirtle used tackle. Charmander used scratch. Charmander won the battle!"
-                 "\nCharmander is now tired and would like to rest up at the Pokemon Center. \nTo the west is the,"#6
-                 ""#7
-                 ]
+locCount = 0
 
 def intro():
     print("Choose Your Pokemon!")
@@ -77,57 +63,45 @@ def pointChecker(count):
     global points
     global visitedLocation
     global pointGain
+    global locCount
 
     if count == -1: #gives total amount of points to user
         return points
-    
-    if count == 0 and visitedLocation[0] == False:
-        points += pointGain
-        visitedLocation[0] = True
-        
-    if count == 1 and visitedLocation[1] == False:
-        points += pointGain
-        visitedLocation[1] = True
-        
-    if count == 2 and visitedLocation[2] == False:
-        points += pointGain
-        visitedLocation[2] = True
-            
-    if count == 3 and visitedLocation[3] == False:
-        points += pointGain
-        visitedLocation[3] = True
-        
-    if count == 4 and visitedLocation[4] == False:
-        points += pointGain
-        visitedLocation[4] = True
-        
-    if count == 5 and visitedLocation[5] == False:
-        points += pointGain
-        visitedLocation[5] = True
 
-    if count == 6 and visitedLocation[6] == False:
+    if visitedLocation[locCount] == False:
         points += pointGain
-        visitedLocation[6] = True
-
-    if count == 7 and visitedLocation[7] == False:
-        points += pointGain
-        visitedLocation[7] = True
-
+        visitedLocation[locCount] = True
 
 def getPoints():
     return pointChecker(-1)
 
 def goto(counter):
-    pointChecker(counter)
-    
+    global locCount
+    pointChecker(locCount)
+    locCount = counter
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def game(playerName, rivalName):
     
-    global location
+    location = [ "You are now in your bedroom. \nTo your east is the door to your living room. ",#0
+                 "You are now in your living room. \nTo the south is the front door. \nTo the west is the door to your bedroom. ",#1
+                 "You are now outside. \nTo your east is the tall grass. \nTo your north is your house. ",#2
+                 "You are now in the tall grass. It is too dangerous to stay here so you will need a Pokemon from Professor Oak to protect yourself."
+                 "\nTo the south is Oak's lab. \nTo the west is your house. ",#3
+                 "You are now in Oak's lab. He tells you to take the pokeball from the research room to the west.\n"
+                 "To the west is the research room. \nTo the north is the exit. ",#4
+                 "You are now in the research room and just picked up your pokeball. " + rivalName +  " wants to battle.\n"
+                 "To the south is the battle arena. \nTo the east is the lab. ",#5
+                 "You entered the battle arena and started your first battle. \n" + playerName + " sent out Charmander. " + rivalName + " sent out Squirtle."
+                 "\nSquirtle used tackle. Charmander used scratch. Charmander won the battle!"
+                 "\nCharmander is now tired and would like to rest up at the Pokemon Center. \nTo the west is the Pokemon Center. \nTo the north is the research room."#6
+                 "You arrived at the Pokemon Center and the Nurse Joy healed your Charmander. You have to pick up a package for the professor at the PokeMart."
+                 "\nTo the north is PokeMart. \nTo the east is the research room."#7
+                 ]
+
     global gameFinished
-    locCount = 0
+    global locCount
 
     while gameFinished == False:
         
@@ -137,23 +111,22 @@ def game(playerName, rivalName):
             
             if choice.lower() == "east":
                 print("You proceeded into the living room where your mother is watching television.\n\n")
-                locCount = 1
+                goto(1)
                 
             else:
                 messageSorter(choice)
 
-                
         #Location1: Living Room
         while locCount == 1:
             choice = input(location[1])
             
             if choice.lower() == "west":
                 print("You proceeded back into your room.\n\n")
-                locCount = 0
+                goto(0)
 
             elif choice.lower() == "south":
                 print("You headed out the door. \nMom:'Goodbye", playerName + ", have a nice day!\n\n")
-                locCount = 2
+                goto(2)
                 
             else:
                 messageSorter(choice)
@@ -164,11 +137,11 @@ def game(playerName, rivalName):
             
             if choice.lower() == "north":
                 print("You proceeded back into your house.\n\n")
-                locCount = 1
+                goto(1)
 
             elif choice.lower() == "east":
                 print("You headed towards the tall grass.\n\n")
-                locCount = 3
+                goto(3)
                 
             else:
                 messageSorter(choice)
@@ -179,11 +152,11 @@ def game(playerName, rivalName):
             
             if choice.lower() == "west":
                 print("You headed back home.\n\n")
-                locCount = 2
+                goto(2)
 
             elif choice.lower() == "south":
                 print("You headed towards Oak's Lab.\n\n")
-                locCount = 4
+                goto(4)
                 
             else:
                 messageSorter(choice)
@@ -194,11 +167,11 @@ def game(playerName, rivalName):
             
             if choice.lower() == "north":
                 print("You exited the building and started heading towards the tall grass.\n\n")
-                locCount = 3
+                goto(3)
 
             elif choice.lower() == "west":
                 print("You walked over to the research room.\n\n")
-                locCount = 5
+                goto(5)
                 
             else:
                 messageSorter(choice)
@@ -209,21 +182,26 @@ def game(playerName, rivalName):
             
             if choice.lower() == "east":
                 print("You headed back for the lab.\n\n")
-                locCount = 4
+                goto(4)
 
             elif choice.lower() == "south":
                 print("You walked toward the battle arena.\n\n")
-                locCount = 6
+                goto(6)
                 
             else:
                 messageSorter(choice)
 
         #Locaton6: Battle Arena and end of game
         while locCount == 6:
-            print(location[6])
+            chioce = input(location[6])
+            
             print(playerName, "sent out Charmander.", rivalName, "sent out Squirtle."
                   "\nSquirtle used tackle. Charmander used scratch. Charmander won the battle!")
-            gameFinished = True
+
+            if choice.lower() = "north":
+                goto(7)
+
+            elif choice.lower() = "":
 
         
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------

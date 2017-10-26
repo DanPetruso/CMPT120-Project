@@ -1,0 +1,14 @@
+Dan Petruso
+CMPT 120L 113
+
+Map for term project
+			Bedroom ----- Living Room
+				             |
+				             |
+				Outside of House ----- Tall Grass
+				                                        |
+						        |
+         Rival's House ----- PokeMart           Research Room  ----- Oak's Lab
+		            |		        |
+		            |  		        |
+	                Pokemon Center ----- Battle Arena

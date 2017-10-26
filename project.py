@@ -35,18 +35,17 @@ def getErrorMessage():
 def getWrongWay():
     print("\nYou cannot move that direction in this location.")
 
-def extraMessages(choice):
+def messageSorter(choice):
     global gameFinished
 
-    if choice.lower() = "help":
+    if choice.lower() == "help":
         getHelp()
 
-    elif choice.lower() = "quit":
+    elif choice.lower() == "quit":
         gameFinished = True
         print("You just quit the game.")
-        break
 
-    elif choice.lower() = "points":
+    elif choice.lower() == "points":
         print("Point total:", getPoints())
 
     else:
@@ -126,183 +125,112 @@ def game(playerName, rivalName):
                  ""#7
                  ]
     
-    global gameFinished = False
+    global gameFinished
     locCount = 0
 
     while gameFinished == False:
         
         #Location0: Bedroom
-        if locCount == 0:
+        while locCount == 0:
+            choice = input(location[0])
             
-            while locCount == 0:
-                choice = input(location[0])
+            if choice.lower() == "east":
+                print("You proceeded into the living room where your mother is watching television.\n\n")
+                pointChecker(locCount)
+                locCount = 1
                 
-                if choice.lower() == "east":
-                    print("You proceeded into the living room where your mother is watching television.\n\n")
-                    pointChecker(locCount)
-                    locCount+=1
-                    
-                elif choice.lower() == "help":
-                    getHelp()
+            else:
+                messageSorter(choice)
 
-                elif choice.lower() == "quit":
-                    gameFinished = True
-                    print("You just quit the game.")
-                    break
 
-                else:
-                    getErrorMessage()
-                print("Point total:", getPoints())
+
                 
-
         #Location1: Living Room
-        if locCount == 1:
+        while locCount == 1:
+            choice = input(location[1])
+            
+            if choice.lower() == "west":
+                print("You proceeded back into your room.\n\n")
+                locCount = 0
 
-            while locCount == 1:
-                choice = input(location[1])
+            elif choice.lower() == "south":
+                print("You headed out the door. \nMom:'Goodbye", playerName + ", have a nice day!\n\n")
+                pointChecker(locCount)
+                locCount = 2
                 
-                if choice.lower() == "west":
-                    print("You proceeded back into your room.\n\n")
-                    locCount-=1
-
-                elif choice.lower() == "south":
-                    print("You headed out the door. \nMom:'Goodbye", playerName + ", have a nice day!\n\n")
-                    pointChecker(locCount)
-                    locCount+=1
-                    
-                elif choice.lower() == "help":
-                    getHelp()
-
-                elif choice.lower() == "quit":
-                    gameFinished = True
-                    print("You just quit the game.")
-                    break
-
-                else:
-                    getErrorMessage()
-                print("Point total:", getPoints())
-
+            else:
+                messageSorter(choice)
 
         #Location2: Outside
-        if locCount == 2:
+        while locCount == 2:
+            choice = input(location[2])
+            
+            if choice.lower() == "north":
+                print("You proceeded back into your house.\n\n")
+                locCount = 1
 
-            while locCount == 2:
-                choice = input(location[2])
+            elif choice.lower() == "east":
+                print("You headed towards the tall grass.\n\n")
+                pointChecker(locCount)
+                locCount = 3
                 
-                if choice.lower() == "north":
-                    print("You proceeded back into your house.\n\n")
-                    locCount-=1
-
-                elif choice.lower() == "east":
-                    print("You headed towards the tall grass.\n\n")
-                    pointChecker(locCount)
-                    locCount+=1
-                    
-                elif choice.lower() == "help":
-                    getHelp()
-
-                elif choice.lower() == "quit":
-                    gameFinished = True
-                    print("You just quit the game.")
-                    break
-
-                else:
-                    getErrorMessage()
-                print("Point total:", getPoints())
-
+            else:
+                messageSorter(choice)
 
         #Location3: Tall Grass
-        if locCount == 3:
+        while locCount == 3:
+            choice = input(location[3])
+            
+            if choice.lower() == "west":
+                print("You headed back home.\n\n")
+                locCount = 2
 
-            while locCount == 3:
-                choice = input(location[3])
+            elif choice.lower() == "south":
+                print("You headed towards Oak's Lab.\n\n")
+                pointChecker(locCount)
+                locCount = 4
                 
-                if choice.lower() == "west":
-                    print("You headed back home.\n\n")
-                    locCount-=1
-
-                elif choice.lower() == "south":
-                    print("You headed towards Oak's Lab.\n\n")
-                    pointChecker(locCount)
-                    locCount+=1
-                    
-                elif choice.lower() == "help":
-                    getHelp()
-
-                elif choice.lower() == "quit":
-                    gameFinished = True
-                    print("You just quit the game.")
-                    break
-
-                else:
-                    getErrorMessage()
-                print("Point total:", getPoints())
-
+            else:
+                messageSorter(choice)
 
         #Location4: Oak's Lab
-        if locCount == 4:
+        while locCount == 4:
+            choice = input(location[4])
+            
+            if choice.lower() == "north":
+                print("You exited the building and started heading towards the tall grass.\n\n")
+                locCount = 3
 
-            while locCount == 4:
-                choice = input(location[4])
+            elif choice.lower() == "west":
+                print("You walked over to the research room.\n\n")
+                pointChecker(locCount)
+                locCount = 5
                 
-                if choice.lower() == "north":
-                    print("You exited the building and started heading towards the tall grass.\n\n")
-                    locCount-=1
-
-                elif choice.lower() == "west":
-                    print("You walked over to the research room.\n\n")
-                    pointChecker(locCount)
-                    locCount+=1
-                    
-                elif choice.lower() == "help":
-                    getHelp()
-
-                elif choice.lower() == "quit":
-                    gameFinished = True
-                    print("You just quit the game.")
-                    break
-
-                else:
-                    getErrorMessage()
-                print("Point total:", getPoints())
-
+            else:
+                messageSorter(choice)
 
         #Location5: Reseach Room
-        if locCount == 5:
+        while locCount == 5:
+            choice = input(location[5])
+            
+            if choice.lower() == "east":
+                print("You headed back for the lab.\n\n")
+                locCount = 4
 
-            while locCount == 5:
-                choice = input(location[5])
+            elif choice.lower() == "south":
+                print("You walked toward the battle arena.\n\n")
+                pointChecker(locCount)
+                locCount = 6
                 
-                if choice.lower() == "east":
-                    print("You headed back for the lab.\n\n")
-                    locCount-=1
-
-                elif choice.lower() == "south":
-                    print("You walked toward the battle arena.\n\n")
-                    pointChecker(locCount)
-                    locCount+=1
-                    
-                elif choice.lower() == "help":
-                    getHelp()
-
-                elif choice.lower() == "quit":
-                    gameFinished = True
-                    print("You just quit the game.")
-                    break
-
-                else:
-                    getErrorMessage()
-                print("Point total:", getPoints())
-
+            else:
+                messageSorter(choice)
 
         #Locaton6: Battle Arena and end of game
-        if locCount == 6:
-
-            while locCount == 6:
-                print(location[6])
-                print(playerName, "sent out Charmander.", rivalName, "sent out Squirtle."
-                      "\nSquirtle used tackle. Charmander used scratch. Charmander won the battle!")
-                gameFinished = True
+        while locCount == 6:
+            print(location[6])
+            print(playerName, "sent out Charmander.", rivalName, "sent out Squirtle."
+                  "\nSquirtle used tackle. Charmander used scratch. Charmander won the battle!")
+            gameFinished = True
 
         
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -3,6 +3,7 @@
 points = 0
 visitedLocation = [False, False, False, False, False, False, False, False]
 pointGain = 5
+gameFinished = False
 
 def intro():
     print("Choose Your Pokemon!")
@@ -31,6 +32,27 @@ def getHelp():
 def getErrorMessage():
     print("\nError. Invalid command.\n")
 
+def getWrongWay():
+    print("\nYou cannot move that direction in this location.")
+
+def extraMessages(choice):
+    global gameFinished
+
+    if choice.lower() = "help":
+        getHelp()
+
+    elif choice.lower() = "quit":
+        gameFinished = True
+        print("You just quit the game.")
+        break
+
+    elif choice.lower() = "points":
+        print("Point total:", getPoints())
+
+    else:
+        getErrorMessage()
+
+    
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def pointChecker(count):
@@ -104,7 +126,7 @@ def game(playerName, rivalName):
                  ""#7
                  ]
     
-    gameFinished = False
+    global gameFinished = False
     locCount = 0
 
     while gameFinished == False:

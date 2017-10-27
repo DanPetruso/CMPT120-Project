@@ -1,10 +1,11 @@
 #Dan Petruso
 #CMPT 120L 113
 points = 0
-visitedLocation = [False, False, False, False, False, False, False, False]
+visitedLocation = [False, False, False, False, False, False, False, False, False]
 pointGain = 5
 gameFinished = False
 locCount = 0
+numOfMoves = 0
 
 def intro():
     print("Choose Your Pokemon!")
@@ -100,7 +101,17 @@ def goto(counter):
     global locCount
     pointChecker(locCount)
     locCount = counter
+    timer()
 
+def timer():
+    global numOfMoves
+    numOfMoves+=1
+    print("Total number of moves:", numOfMoves)
+    if numOfMoves == 15:
+        print("You have been out for a long time and your mother wants you home. Game Over.")
+        gameFinished = True
+        locCount = -1
+        
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def game(playerName, rivalName):
@@ -116,12 +127,12 @@ def game(playerName, rivalName):
                  "To the south is the battle arena. \nTo the east is the lab. ",#5
                  "You entered the battle arena and started your first battle. \n" + playerName + " sent out Charmander. " + rivalName + " sent out Squirtle."
                  "\nSquirtle used tackle. Charmander used scratch. Charmander won the battle!"
-                 "\nCharmander is now tired and would like to rest up at the Pokemon Center. \nTo the west is the Pokemon Center. \nTo the north is the research room."#6
-                 "You arrived at the Pokemon Center and Nurse Joy healed your Charmander. You have to pick up a package for the professor at the PokeMart."
-                 "\nTo the north is PokeMart. \nTo the east is the research room.",#7
-                 "You arrived at the PokeMart and received the package. Professor Oak wants you to give it to him at " + rivalName + "'s house."
-                 "\nTo the west is " + rivalName + "'s house. \nTo the south is the Pokemon Center."#8
-                 "You arrived at " + rivalName + "'s house and delivered the package. Thanks for playing!" #9
+                 "\nCharmander is now tired and would like to rest up at the Pokemon Center. \nTo the west is the Pokemon Center. \nTo the north is the research room.",#6
+                 "\nYou arrived at the Pokemon Center and Nurse Joy healed your Charmander. You have to pick up a package for the professor at the PokeMart."
+                 "\nTo the north is PokeMart. \nTo the east is the research room. ",#7
+                 "\nYou arrived at the PokeMart and received the package. Professor Oak wants you to give it to him at " + rivalName + "'s house."
+                 "\nTo the west is " + rivalName + "'s house. \nTo the south is the Pokemon Center. "#8
+                 "You arrived at " + rivalName + "'s house and delivered the package. Thanks for playing! " #9
                  ]
 
     global gameFinished
@@ -217,7 +228,7 @@ def game(playerName, rivalName):
 
         #Locaton6: Battle Arena 
         while locCount == 6:
-            chioce = input(location[6])
+            choice = input(location[6])
             
             if choice.lower() == "north":
                 goto(5)
@@ -230,7 +241,7 @@ def game(playerName, rivalName):
 
         #Location7: Pokemon Center
         while locCount == 7:
-            chioce = input(location[7])
+            choice = input(location[7])
             
             if choice.lower() == "east":
                 goto(6)
@@ -243,7 +254,7 @@ def game(playerName, rivalName):
 
         #Location8: PokeMart
         while locCount == 8:
-            chioce = input(location[8])
+            choice = input(location[8])
             
             if choice.lower() == "north":
                 goto(7)

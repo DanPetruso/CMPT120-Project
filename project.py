@@ -1,7 +1,7 @@
 #Dan Petruso
 #CMPT 120L 113
 points = 0
-visitedLocation = [False, False, False, False, False, False, False, False, False]
+visitedLocation = [False, False, False, False, False, False, False, False, False, False]
 pointGain = 5
 gameFinished = False
 locCount = 0
@@ -88,7 +88,7 @@ def pointChecker(count):
     global locCount
 
     if count == -1: #gives total amount of points to user
-        print("Total points: " + str(points))
+        print("\nTotal points: " + str(points))
 
     if visitedLocation[locCount] == False:
         points += pointGain
@@ -105,6 +105,8 @@ def goto(counter):
 
 def timer():
     global numOfMoves
+    global locCount
+    global gameFinished
     numOfMoves+=1
     print("Total number of moves:", numOfMoves)
     if numOfMoves == 15:
@@ -131,7 +133,7 @@ def game(playerName, rivalName):
                  "\nYou arrived at the Pokemon Center and Nurse Joy healed your Charmander. You have to pick up a package for the professor at the PokeMart."
                  "\nTo the north is PokeMart. \nTo the east is the research room. ",#7
                  "\nYou arrived at the PokeMart and received the package. Professor Oak wants you to give it to him at " + rivalName + "'s house."
-                 "\nTo the west is " + rivalName + "'s house. \nTo the south is the Pokemon Center. "#8
+                 "\nTo the west is " + rivalName + "'s house. \nTo the south is the Pokemon Center. ",#8
                  "You arrived at " + rivalName + "'s house and delivered the package. Thanks for playing! " #9
                  ]
 
@@ -266,9 +268,10 @@ def game(playerName, rivalName):
                 messageSorter(choice)
 
         #Location9: Rival's House
-        while locCount == 9:
+        if locCount == 9:
             print(location[9])
             getPoints()
+            gameFinished = True
 
 
 

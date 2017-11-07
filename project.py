@@ -154,6 +154,20 @@ def game(playerName, rivalName):
                  #9
                  ]
 
+
+    mapMatrix = [   #  North       South       East        West
+                    [  None,       None,       goto(1),    None     ]    #Bedroom       0
+                ,   [  None,       goto(2),    None,       goto(0)  ]    #Livingroom    1
+                ,   [  goto(1),    None,       goto(3),    None     ]    #Outside       2
+                ,   [  None,       goto(4),    None,       goto(2)  ]    #Tall Grass    3
+                ,   [  goto(3),    None,       None,       goto(5)  ]    #Oaks Lab      4
+                ,   [  None,       goto(6),    goto(4),    None     ]    #Research Room 5
+                ,   [  goto(5),    None,       None,       goto(7)  ]    #Battle Arena  6
+                ,   [  goto(8),    None,       goto(6),    None     ]    #Pkmn Center   7
+                ,   [  None,       goto(7),    None,       goto(9)  ]    #PokeMart      8
+                ,   [  None,       None,       None,       None     ]    #Rivals House  9
+                ]
+
     global gameFinished
     global locCount
 

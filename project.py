@@ -76,7 +76,13 @@ def getMap():
 
 
 
-        
+def directionToNum(direction):
+    change = {
+        "north" : 0,
+        "south" : 1,
+        "east"  : 2,
+        "west"  : 3}
+    return world[direction]
 
     
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -118,29 +124,53 @@ def timer():
 
 def game(playerName, rivalName):
     
-    location = [ "You are now in your bedroom. \nTo your east is the door to your living room. ",#0
-                 "You are now in your living room. \nTo the south is the front door. \nTo the west is the door to your bedroom. ",#1
-                 "You are now outside of your house. \nTo your east is the tall grass. \nTo your north is your house. ",#2
+    location = [ "You are now in your bedroom. You're bed is unmade and you're too lazy to make it. \nTo your east is the door to your living room. "
+                 ,#0
+                 "You are now in your living room. Your mother is watching television and you're father is nowhere in site."
+                 "\nTo the south is the front door. \nTo the west is the door to your bedroom. "
+                 ,#1
+                 "You are now outside of your house. From the you notice a few pidgeys on your front lawn. \nTo your east is the tall grass. \nTo your north is your house. "
+                 ,#2
                  "You are now in the tall grass. It is too dangerous to stay here so you will need a Pokemon from Professor Oak to protect yourself."
-                 "\nTo the south is Oak's lab. \nTo the west is your house. ",#3
+                 "\nTo the south is Oak's lab. \nTo the west is your house. "
+                 ,#3
                  "You are now in Oak's lab. He tells you to take the pokeball from the research room to the west.\n"
-                 "To the west is the research room. \nTo the north is the exit. ",#4
+                 "To the west is the research room. \nTo the north is the exit. "
+                 ,#4
                  "You are now in the research room and just picked up your pokeball. " + rivalName +  " wants to battle.\n"
-                 "To the south is the battle arena. \nTo the east is the lab. ",#5
+                 "To the south is the battle arena. \nTo the east is the lab. "
+                 ,#5
                  "You entered the battle arena and started your first battle. \n" + playerName + " sent out Charmander. " + rivalName + " sent out Squirtle."
                  "\nSquirtle used tackle. Charmander used scratch. Charmander won the battle!"
-                 "\nCharmander is now tired and would like to rest up at the Pokemon Center. \nTo the west is the Pokemon Center. \nTo the north is the research room.",#6
+                 "\nCharmander is now tired and would like to rest up at the Pokemon Center. \nTo the west is the Pokemon Center. \nTo the north is the research room."
+                 ,#6
                  "\nYou arrived at the Pokemon Center and Nurse Joy healed your Charmander. You have to pick up a package for the professor at the PokeMart."
-                 "\nTo the north is PokeMart. \nTo the east is the research room. ",#7
-                 "\nYou arrived at the PokeMart and received the package. Professor Oak wants you to give it to him at " + rivalName + "'s house."
-                 "\nTo the west is " + rivalName + "'s house. \nTo the south is the Pokemon Center. ",#8
-                 "You arrived at " + rivalName + "'s house and delivered the package. Thanks for playing! " #9
+                 "\nTo the north is PokeMart. \nTo the east is the research room. "
+                 ,#7
+                 "\nYou arrived at the PokeMart and have to pick up the package. Professor Oak wants you to give it to him at " + rivalName + "'s house."
+                 "\nTo the west is " + rivalName + "'s house. \nTo the south is the Pokemon Center. "
+                 ,#8
+                 "You arrived at " + rivalName + "'s house and delivered the package. Thanks for playing! "
+                 #9
                  ]
 
     global gameFinished
     global locCount
 
     while gameFinished == False:
+
+
+
+        choice = input(location[locCount])
+        
+        if choice.lower() == "east":
+            print("You proceeded into the living room where your mother is watching television.\n\n")
+            goto(1)
+            
+        else:
+            messageSorter(choice)
+
+        
         
         #Location0: Bedroom
         while locCount == 0:

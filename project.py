@@ -9,7 +9,7 @@ numOfMoves = 0
 playerName = ""
 rivalName = ""
 
-location = [ "\nYou are now in your bedroom. You're bed is unmade and you're too lazy to make it. \nTo your east is the door to your living room. "
+location = [ "\nYou are now in your bedroom. You're bed is unmade and you're too lazy to make it. You see something on your desk. \nTo your east is the door to your living room. "
              ,#0
              "\nYou are now in your living room. Your mother is watching television and you're father is nowhere in site."
              "\nTo the south is the front door. \nTo the west is the door to your bedroom. "
@@ -24,10 +24,9 @@ location = [ "\nYou are now in your bedroom. You're bed is unmade and you're too
              ,#4
              "\nYou are now in the research room and there is a pokeball on the table."
              "\nTo the south is the battle arena. \nTo the east is the lab. "
-             ,#5 FIX THE BATTLE MESSAGE
-             "\nYou entered the battle arena and started your first battle. \n" + playerName + " sent out Charmander. " + rivalName + " sent out Squirtle."
-             "\nSquirtle used tackle. Charmander used scratch. Charmander won the battle!"
-             "\nCharmander is now tired and would like to rest up at the Pokemon Center. \nTo the west is the Pokemon Center. \nTo the north is the research room."
+             ,#5
+             "\nYou entered the battle arena and " + rivalName + " would like to battle."
+             "\nTo the west is the Pokemon Center. \nTo the north is the research room."
              ,#6
              "\nYou arrived at the Pokemon Center and Nurse Joy healed your Charmander. You have to pick up a package for the professor at the PokeMart."
              "\nTo the north is PokeMart. \nTo the east is the research room. "
@@ -61,7 +60,40 @@ shortLocation = [ "\nYou are now in your bedroom. East is the door to your livin
                   ,#9
                   ]
 
+searchLocation = ["There is a map on your desk. "
+                  ,#0
+                  "There is no item here. "
+                  ,#1
+                  "There is no item here. "
+                  ,#2
+                  "There is no item here. "
+                  ,#3
+                  "There is no item here. "
+                  ,#4
+                  "There is a pokeball on the table. "
+                  ,#5
+                  "There is no item here. "
+                  ,#6
+                  "There is no item here. "
+                  ,#7
+                  "There is a package you need to pick up. "
+                  ,#8
+                  "There is no item here. "
+                  ,#9
+                  ]
 
+inventory = ["map", "pokeball", "package"]
+canUse = [False, False, False]
+itemUsed = ["You received the map!"
+            ,#0
+            "You threw the pokeball and out came Charmander. You began your first battle against " + rivalName + "'s Squirtle."
+            "/nSquirtle used tackle! Charmander used Scratch! Charmander won the battle! Charmander is now tired and would like to rest up at the Pokemon Center."
+            ,#1
+            "You delivered the package to Professor Oak. In return, he rewards you with a Pokedex."
+            #2
+            ]
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def intro():
     global playerName
@@ -93,25 +125,33 @@ def getErrorMessage():
 def getWrongWay():
     print("\nYou cannot move at that direction in this location.")
 
+def getLongLocation():
+    global location
+    global locCount
+    print(location[locCount])
+
 def messageSorter(choice):
     global gameFinished
 
-    if choice.lower() == "help":
+    if choice == "help":
         getHelp()
 
-    elif choice.lower() == "quit":
+    elif choice == "quit":
         gameFinished = True
         print("You just quit the game.")
         locCount = -1 #breaks out of initial loop
 
-    elif choice.lower() == "points":
+    elif choice == "points":
         getPoints()
 
-    elif choice.lower() == "north" or choice.lower() == "south" or choice.lower() == "east" or choice.lower() == "west":
+    elif choice == "north" or choice.lower() == "south" or choice.lower() == "east" or choice.lower() == "west":
         getWrongWay()
 
-    elif choice.lower() == "map":
+    elif choice == "map":
         getMap()
+
+    elif choice == "look":
+        getLongLocation()
 
     else:
         getErrorMessage()
@@ -366,7 +406,7 @@ def game():
 
 def main():
 
-    #intro()
+    intro()
 
     game()
     

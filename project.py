@@ -70,7 +70,7 @@ searchLocation = ["There is a map on your desk. "
                   ,#3
                   "There is no item here. "
                   ,#4
-                  "There is a pokeball on the table. "
+                  "There is a pokeball on the table that you can take. "
                   ,#5
                   "There is no item here. "
                   ,#6
@@ -84,7 +84,7 @@ searchLocation = ["There is a map on your desk. "
 
 inventory = ["map", "pokeball", "package"]
 canUse = [False, False, False]
-itemUsed = ["You received the map!"
+itemUsed = [""
             ,#0
             "You threw the pokeball and out came Charmander. You began your first battle against " + rivalName + "'s Squirtle."
             "/nSquirtle used tackle! Charmander used Scratch! Charmander won the battle! Charmander is now tired and would like to rest up at the Pokemon Center."
@@ -130,8 +130,28 @@ def getLongLocation():
     global locCount
     print(location[locCount])
 
+def getSearch():
+    global locCount
+    global searchLocation
+    print(searchLocation[locCount])
+
+def takeItem():
+    global locCount
+    global canUse
+    if locCount == 0:
+        canUse[0] = True
+        print("You took the map.")
+    if locCount == 5:
+        canUse[1] = True
+        print("You took the pokeball.")
+    if locCount == 8:
+        canUse[2] = True
+        print("You took the package.")
+
 def messageSorter(choice):
     global gameFinished
+    global inventory
+    global canUse
 
     if choice == "help":
         getHelp()
@@ -139,7 +159,6 @@ def messageSorter(choice):
     elif choice == "quit":
         gameFinished = True
         print("You just quit the game.")
-        locCount = -1 #breaks out of initial loop
 
     elif choice == "points":
         getPoints()
@@ -147,8 +166,34 @@ def messageSorter(choice):
     elif choice == "north" or choice.lower() == "south" or choice.lower() == "east" or choice.lower() == "west":
         getWrongWay()
 
-    elif choice == "map":
-        getMap()
+    elif choice == inventory[0]:#map
+        if canUse[0] == True:
+            getMap()
+        else:
+            print("You do not have the map yet.")
+
+    elif choice == inventory[1]:#pokeball
+        if canUse == True and locCount == 6:
+            itemUsed[1]
+        elif canUse[1] == False:
+            print("You do not have the pokeball yet.")
+        else:
+            print("You cannot use that in this location.")
+
+    elif choice == inventory[2]:#package
+        if canUse == True and locCount == 9:
+            itemUsed[2]
+            gameFinished = True
+        elif canUse[2] == False:
+            print("You do not have the package yet.")
+        else:
+            print("You cannot use that here.")
+
+    elif choice == "search":
+        getSearch()
+
+    elif choice == "take":
+        takeItem()
 
     elif choice == "look":
         getLongLocation()
@@ -225,10 +270,9 @@ def timer():
     global gameFinished
     numOfMoves+=1
     print("Total number of moves:", numOfMoves)
-    if numOfMoves == 15:
+    if numOfMoves == 18:
         print("You have been out for a long time and your mother wants you home. Game Over.")
         gameFinished = True
-        locCount = -1
         
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -252,9 +296,11 @@ def game():
     global gameFinished
     global locCount
     
+    print(locationLength(locCount))
+    
     while gameFinished == False:
 
-        choice = input(locationLength(locCount))
+        choice = input()
         choice = choice.lower()
         choice = choice.strip()
         
@@ -262,7 +308,7 @@ def game():
             num = directionToNum(choice)
             move = mapMatrix[locCount][num]
             goto(move)
-            
+            print(locationLength(locCount))
         else:
             messageSorter(choice)
 

@@ -1,107 +1,137 @@
 #Dan Petruso
 #CMPT 120L 113
-points = 0
-visitedLocation = [False, False, False, False, False, False, False, False, False, False]
-pointGain = 5
-gameFinished = False
-locCount = 0
-numOfMoves = 0
-playerName = ""
-rivalName = ""
+def initialize():
+    global points
+    points = 0
 
-location = [ "\nYou are now in your bedroom. You're bed is unmade and you're too lazy to make it. You see something on your desk. \nTo your east is the door to your living room. "
-             ,#0
-             "\nYou are now in your living room. Your mother is watching television and you're father is nowhere in site."
-             "\nTo the south is the front door. \nTo the west is the door to your bedroom. "
-             ,#1
-             "\nYou are now outside of your house. From the you notice a few pidgeys on your front lawn. \nTo your east is the tall grass. \nTo your north is your house. "
-             ,#2
-             "\nYou are now in the tall grass. It is too dangerous to stay here so you will need a Pokemon from Professor Oak to protect yourself."
-             "\nTo the south is Oak's lab. \nTo the west is outside your house. "
-             ,#3
-             "\nYou are now in Oak's lab. He tells you to take the pokeball from the research room to the west."
-             "\nTo the west is the research room. \nTo the north is the exit. "
-             ,#4
-             "\nYou are now in the research room and there is a pokeball on the table."
-             "\nTo the south is the battle arena. \nTo the east is the lab. "
-             ,#5
-             "\nYou entered the battle arena and " + rivalName + " would like to battle."
-             "\nTo the west is the Pokemon Center. \nTo the north is the research room."
-             ,#6
-             "\nYou arrived at the Pokemon Center and Nurse Joy healed your Charmander. You have to pick up a package for the professor at the PokeMart."
-             "\nTo the north is PokeMart. \nTo the east is the research room. "
-             ,#7
-             "\nYou arrived at the PokeMart and have to pick up the package. Professor Oak wants you to give it to him at " + rivalName + "'s house."
-             "\nTo the west is " + rivalName + "'s house. \nTo the south is the Pokemon Center. "
-             ,#8
-             "\nYou arrived at " + rivalName + "'s house and delivered the package. Thanks for playing! "
-             #9
-             ]
+    global visitedLocation
+    visitedLocation = [False, False, False, False, False, False, False, False, False, False]
+    
+    global pointGain
+    pointGain = 5
 
-shortLocation = [ "\nYou are now in your bedroom. East is the door to your living room. "
-                  ,#0
-                  "\nYou are now in your living room. South is the front door. West is your bedroom. "
-                  ,#1
-                  "\nYour are now outside your house. East is the tall grass. North is your house. "
-                  ,#2
-                  "\nYou are now in the tall grass. South is Oak's lab. West is outside your house. "
-                  ,#3
-                  "\nYou are now in Oak's Lab. West is research room. North is the exit. "
-                  ,#4
-                  "\nYou are now in the research room. South is the battle arena. East is the lab. "
-                  ,#5
-                  "\nYou are now in the battle arena. West is Pokemon Center. North is research room. "
-                  ,#6
-                  "\nYou are now in the Pokemon Center. North is PokeMart. East is research room. "
-                  ,#7
-                  "\nYou are now in the PokeMart. West is " + rivalName + "'s house. South is Pokemon Center. "
-                  ,#8
-                  "\nYou are at " + rivalName + "'s house. East is PokeMart. "
-                  ,#9
-                  ]
+    global gameFinished
+    gameFinished = False
 
-searchLocation = ["There is a map on your desk. "
-                  ,#0
-                  "There is no item here. "
-                  ,#1
-                  "There is no item here. "
-                  ,#2
-                  "There is no item here. "
-                  ,#3
-                  "There is no item here. "
-                  ,#4
-                  "There is a pokeball on the table that you can take. "
-                  ,#5
-                  "There is no item here. "
-                  ,#6
-                  "There is no item here. "
-                  ,#7
-                  "There is a package you need to pick up. "
-                  ,#8
-                  "There is no item here. "
-                  ,#9
-                  ]
+    global locCount
+    locCount = 0
 
-inventory = ["map", "pokeball", "package"]
-canUse = [False, False, False]
-itemUsed = [""
-            ,#0
-            "You threw the pokeball and out came Charmander. You began your first battle against " + rivalName + "'s Squirtle."
-            "/nSquirtle used tackle! Charmander used Scratch! Charmander won the battle! Charmander is now tired and would like to rest up at the Pokemon Center."
-            ,#1
-            "You delivered the package to Professor Oak. In return, he rewards you with a Pokedex."
-            #2
-            ]
+    global numOfMoves
+    numOfMoves = 0
+
+    global playerName
+    global rivalName
+
+    global location
+    location = [ "\nYou are now in your bedroom. You're bed is unmade and you're too lazy to make it. You see something on your desk."
+                 "\nTo your east is the door to your living room. "
+                 ,#0
+                 "\nYou are now in your living room. Your mother is watching television and you're father is nowhere in site."
+                 "\nTo the south is the front door. \nTo the west is the door to your bedroom. "
+                 ,#1
+                 "\nYou are now outside of your house. From the you notice a few pidgeys on your front lawn."
+                 "\nTo your east is the tall grass. \nTo your north is your house. "
+                 ,#2
+                 "\nYou are now in the tall grass. It is too dangerous to stay here so you will need a Pokemon "
+                 "from Professor Oak to protect yourself."
+                 "\nTo the south is Oak's lab. \nTo the west is outside your house. "
+                 ,#3
+                 "\nYou are now in Oak's lab. He tells you to take the pokeball from the research room to the west."
+                 "\nTo the west is the research room. \nTo the north is the exit. "
+                 ,#4
+                 "\nYou are now in the research room and there is a pokeball on the table."
+                 "\nTo the south is the battle arena. \nTo the east is the lab. "
+                 ,#5
+                 "\nYou entered the battle arena and " + rivalName + " would like to battle."
+                 "\nTo the west is the Pokemon Center. \nTo the north is the research room."
+                 ,#6
+                 "\nYou arrived at the Pokemon Center and Nurse Joy healed your Charmander. "
+                 "You have to pick up a package for the professor at the PokeMart."
+                 "\nTo the north is PokeMart. \nTo the east is the research room. "
+                 ,#7
+                 "\nYou arrived at the PokeMart and have to pick up the package. Professor Oak wants you "
+                 "to give it to him at " + rivalName + "'s house."
+                 "\nTo the west is " + rivalName + "'s house. \nTo the south is the Pokemon Center. "
+                 ,#8
+                 "\nYou arrived at " + rivalName + "'s house and delivered the package. Thanks for playing! "
+                 #9
+                 ]
+
+    global shortLocation
+    shortLocation = [ "\nYou are now in your bedroom. East is the door to your living room. "
+                      ,#0
+                      "\nYou are now in your living room. South is the front door. West is your bedroom. "
+                      ,#1
+                      "\nYour are now outside your house. East is the tall grass. North is your house. "
+                      ,#2
+                      "\nYou are now in the tall grass. South is Oak's lab. West is outside your house. "
+                      ,#3
+                      "\nYou are now in Oak's Lab. West is research room. North is the exit. "
+                      ,#4
+                      "\nYou are now in the research room. South is the battle arena. East is the lab. "
+                      ,#5
+                      "\nYou are now in the battle arena. West is Pokemon Center. North is research room. "
+                      ,#6
+                      "\nYou are now in the Pokemon Center. North is PokeMart. East is research room. "
+                      ,#7
+                      "\nYou are now in the PokeMart. West is " + rivalName + "'s house. South is Pokemon Center. "
+                      ,#8
+                      "\nYou are at " + rivalName + "'s house. East is PokeMart. "
+                      ,#9
+                      ]
+    
+    global searchLocation
+    searchLocation = ["There is a map on your desk. "
+                      ,#0
+                      "There is no item here. "
+                      ,#1
+                      "There is no item here. "
+                      ,#2
+                      "There is no item here. "
+                      ,#3
+                      "There is no item here. "
+                      ,#4
+                      "There is a pokeball on the table that you can take. "
+                      ,#5
+                      "There is no item here. "
+                      ,#6
+                      "There is no item here. "
+                      ,#7
+                      "There is a package you need to pick up. "
+                      ,#8
+                      "There is no item here. "
+                      ,#9
+                      ]
+    
+    global inventory
+    inventory = ["map", "pokeball", "package"]
+
+    global canUse
+    canUse = [False, False, False]
+
+    global itemUsed
+    itemUsed = [""#calls get map in the functoin
+                ,#0
+                "You threw the pokeball and out came Charmander. You began your first battle against " + rivalName + "'s Squirtle."
+                "/nSquirtle used tackle! Charmander used Scratch! Charmander won the battle! Charmander is now tired and would like to rest up at the Pokemon Center."
+                ,#1
+                "You delivered the package to Professor Oak. In return, he rewards you with a Pokedex."
+                #2
+                ]
+
+    global gameWon
+    gameWon False
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def intro():
-    global playerName
-    global rivalName
     print("Choose Your Pokemon!")
     print("This is a game where you will choose your first Pokemon and start your first battle.")
-    print("Every new move you will gain", pointGain, "points.")
+    print("Every new move you will gain 5 points.")
 
+def customize():
+    global playerName
+    global rivalName
     playerName = input("Professor Oak: 'Welcome to the world of Pokemon, what is your name?' ")
 
     rivalName = input("Professor Oak: 'Hello " + playerName + ", this is my grandson and your rival, what was his name again?' ")
@@ -109,6 +139,14 @@ def intro():
     print("Professor Oak: 'Oh yes, it was " + rivalName + ". Great! Now you have begun your journey!'\n ")
 
     print("-------------------------------------------------------------------\n")
+
+def ending():
+    global gameWon
+    if gameWon == True:
+        print("Congrats! You won the game!")
+    elif gameWon == False:
+        print("Game Over! You didn't complete all the requirements.")
+    getCopyright()
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -173,16 +211,16 @@ def messageSorter(choice):
             print("You do not have the map yet.")
 
     elif choice == inventory[1]:#pokeball
-        if canUse == True and locCount == 6:
-            itemUsed[1]
+        if canUse[1] == True and locCount == 6:
+            print(itemUsed[1])
         elif canUse[1] == False:
             print("You do not have the pokeball yet.")
         else:
             print("You cannot use that in this location.")
 
     elif choice == inventory[2]:#package
-        if canUse == True and locCount == 9:
-            itemUsed[2]
+        if canUse[2] == True and locCount == 9:
+            print(itemUsed[2])
             gameFinished = True
         elif canUse[2] == False:
             print("You do not have the package yet.")
@@ -296,7 +334,7 @@ def game():
     global gameFinished
     global locCount
     
-    print(locationLength(locCount))
+    print(locationLength(6))
     
     while gameFinished == False:
 
@@ -312,150 +350,15 @@ def game():
         else:
             messageSorter(choice)
 
-        
-    while False:
-        #Location0: Bedroom
-        while locCount == 0:
-            choice = input(location[0])
-            
-            if choice.lower() == "east":
-                print("You proceeded into the living room where your mother is watching television.\n\n")
-                goto(1)
                 
-            else:
-                messageSorter(choice)
-
-        #Location1: Living Room
-        while locCount == 1:
-            choice = input(location[1])
-            
-            if choice.lower() == "west":
-                print("You proceeded back into your room.\n\n")
-                goto(0)
-
-            elif choice.lower() == "south":
-                print("You headed out the door. \nMom:'Goodbye", playerName + ", have a nice day!\n\n")
-                goto(2)
-                
-            else:
-                messageSorter(choice)
-
-        #Location2: Outside
-        while locCount == 2:
-            choice = input(location[2])
-            
-            if choice.lower() == "north":
-                print("You proceeded back into your house.\n\n")
-                goto(1)
-
-            elif choice.lower() == "east":
-                print("You headed towards the tall grass.\n\n")
-                goto(3)
-                
-            else:
-                messageSorter(choice)
-
-        #Location3: Tall Grass
-        while locCount == 3:
-            choice = input(location[3])
-            
-            if choice.lower() == "west":
-                print("You headed back home.\n\n")
-                goto(2)
-
-            elif choice.lower() == "south":
-                print("You headed towards Oak's Lab.\n\n")
-                goto(4)
-                
-            else:
-                messageSorter(choice)
-
-        #Location4: Oak's Lab
-        while locCount == 4:
-            choice = input(location[4])
-            
-            if choice.lower() == "north":
-                print("You exited the building and started heading towards the tall grass.\n\n")
-                goto(3)
-
-            elif choice.lower() == "west":
-                print("You walked over to the research room.\n\n")
-                goto(5)
-                
-            else:
-                messageSorter(choice)
-
-        #Location5: Reseach Room
-        while locCount == 5:
-            choice = input(location[5])
-            
-            if choice.lower() == "east":
-                print("You headed back for the lab.\n\n")
-                goto(4)
-
-            elif choice.lower() == "south":
-                print("You walked toward the battle arena.\n\n")
-                goto(6)
-                
-            else:
-                messageSorter(choice)
-
-        #Locaton6: Battle Arena 
-        while locCount == 6:
-            choice = input(location[6])
-            
-            if choice.lower() == "north":
-                goto(5)
-
-            elif choice.lower() == "west":
-                goto(7)
-
-            else:
-                messageSorter(choice)
-
-        #Location7: Pokemon Center
-        while locCount == 7:
-            choice = input(location[7])
-            
-            if choice.lower() == "east":
-                goto(6)
-
-            elif choice.lower() == "north":
-                goto(8)
-
-            else:
-                messageSorter(choice)
-
-        #Location8: PokeMart
-        while locCount == 8:
-            choice = input(location[8])
-            
-            if choice.lower() == "north":
-                goto(7)
-
-            elif choice.lower() == "west":
-                goto(9)
-
-            else:
-                messageSorter(choice)
-
-        #Location9: Rival's House
-        if locCount == 9:
-            print(location[9])
-            getPoints()
-            gameFinished = True
-
-
-
-        
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def main():
 
     intro()
-
+    customize()
+    initialize
     game()
-    
-    getCopyright()
+    ending()
     
 main()

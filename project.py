@@ -29,7 +29,7 @@ def initialize():
                  "\nYou are now in your living room. Your mother is watching television and you're father is nowhere in site."
                  "\nTo the south is the front door. \nTo the west is the door to your bedroom. "
                  ,#1
-                 "\nYou are now outside of your house. From the you notice a few pidgeys on your front lawn."
+                 "\nYou are now outside of your house. You notice a few pidgeys on your front lawn."
                  "\nTo your east is the tall grass. \nTo your north is your house. "
                  ,#2
                  "\nYou are now in the tall grass. It is too dangerous to stay here so you will need a Pokemon "
@@ -39,7 +39,7 @@ def initialize():
                  "\nYou are now in Oak's lab. He tells you to take the pokeball from the research room to the west."
                  "\nTo the west is the research room. \nTo the north is the exit. "
                  ,#4
-                 "\nYou are now in the research room and there is a pokeball on the table."
+                 "\nYou are now in the research room and there are pokeballs everywhere."
                  "\nTo the south is the battle arena. \nTo the east is the lab. "
                  ,#5
                  "\nYou entered the battle arena and " + rivalName + " would like to battle."
@@ -53,7 +53,7 @@ def initialize():
                  "to give it to him at " + rivalName + "'s house."
                  "\nTo the west is " + rivalName + "'s house. \nTo the south is the Pokemon Center. "
                  ,#8
-                 "\nYou arrived at " + rivalName + "'s house and delivered the package. Thanks for playing! "
+                 "\nYou arrived at " + rivalName + "'s house and Professor Oak would like the package you were supposed to pick up."
                  #9
                  ]
 
@@ -110,7 +110,7 @@ def initialize():
     canUse = [False, False, False]
 
     global itemUsed
-    itemUsed = [""#calls get map in the functoin
+    itemUsed = [""#calls getMap in the functoin
                 ,#0
                 "You threw the pokeball and out came Charmander. You began your first battle against " + rivalName + "'s Squirtle."
                 "/nSquirtle used tackle! Charmander used Scratch! Charmander won the battle! Charmander is now tired and would like to rest up at the Pokemon Center."
@@ -120,7 +120,7 @@ def initialize():
                 ]
 
     global gameWon
-    gameWon False
+    gameWon = False
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -154,7 +154,8 @@ def getCopyright():
     print("Copyright (c) 2107 Daniel Petruso, daniel.petruso1@marist.edu")
 
 def getHelp():
-    print("\nValid commands for the game are North, South, East, West. \nNot all commands will work for all locations."
+    print("\nValid commands for the game are North, South, East, West, Look, Search, Take, Map, Pokeball, Package, Help."
+          "\nNot all commands will work for all locations."
           "\nType Help to review the commands and Quit to exit game.\n")
 
 def getErrorMessage():
@@ -190,6 +191,7 @@ def messageSorter(choice):
     global gameFinished
     global inventory
     global canUse
+    global gameWon
 
     if choice == "help":
         getHelp()
@@ -222,6 +224,7 @@ def messageSorter(choice):
         if canUse[2] == True and locCount == 9:
             print(itemUsed[2])
             gameFinished = True
+            gameWon = True
         elif canUse[2] == False:
             print("You do not have the package yet.")
         else:
@@ -334,9 +337,14 @@ def game():
     global gameFinished
     global locCount
     
-    print(locationLength(6))
+    print(locationLength(locCount))
     
     while gameFinished == False:
+
+        if locCount == 9 and canUse[2] == False: #player loses game if they go to last location without item.
+            gameFinished = True
+            gameWon = False
+            break
 
         choice = input()
         choice = choice.lower()
@@ -357,7 +365,7 @@ def main():
 
     intro()
     customize()
-    initialize
+    initialize()
     game()
     ending()
     

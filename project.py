@@ -45,7 +45,7 @@ def initialize():
                  "\nYou entered the battle arena and " + rivalName + " would like to battle."
                  "\nTo the west is the Pokemon Center. \nTo the north is the research room."
                  ,#6
-                 "\nYou arrived at the Pokemon Center and Nurse Joy healed your Charmander. "
+                 "\nYou arrived at the Pokemon Center and Nurse Joy healed your Pokemon. "
                  "You have to pick up a package for the professor at the PokeMart."
                  "\nTo the north is PokeMart. \nTo the east is the research room. "
                  ,#7
@@ -113,7 +113,7 @@ def initialize():
     itemUsed = [""#calls getMap in the functoin
                 ,#0
                 "You threw the pokeball and out came Charmander. You began your first battle against " + rivalName + "'s Squirtle."
-                "/nSquirtle used tackle! Charmander used Scratch! Charmander won the battle! Charmander is now tired and would like to rest up at the Pokemon Center."
+                "\nSquirtle used tackle! Charmander used Scratch! Charmander won the battle! Charmander is now tired and would like to rest up at the Pokemon Center."
                 ,#1
                 "You delivered the package to Professor Oak. In return, he rewards you with a Pokedex."
                 #2
@@ -316,7 +316,7 @@ def timer():
     numOfMoves+=1
     print("Total number of moves:", numOfMoves)
     if numOfMoves == 18:
-        print("You have been out for a long time and your mother wants you home. Game Over.")
+        print("You have been out for a long time and your mother wants you home.")
         gameFinished = True
         
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------

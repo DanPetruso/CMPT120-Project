@@ -154,7 +154,7 @@ def getCopyright():
     print("Copyright (c) 2107 Daniel Petruso, daniel.petruso1@marist.edu")
 
 def getHelp():
-    print("\nValid commands for the game are North, South, East, West, Look, Search, Take, Map, Pokeball, Package, Help."
+    print("\nValid commands for the game are North, South, East, West, Look, Search, Take, Map, Pokeball, Package."
           "\nNot all commands will work for all locations."
           "\nType Help to review the commands and Quit to exit game.\n")
 
@@ -301,9 +301,13 @@ def getLocation():
 
 def goto(counter):
     global locCount
-    pointChecker(locCount)
-    locCount = counter
-    timer()
+    if counter == None:
+        print("You cannot move in that direction here.")
+    else:
+        pointChecker(locCount)
+        locCount = counter
+        print(locationLength(locCount))
+        timer()
 
 def timer():
     global numOfMoves
@@ -354,7 +358,7 @@ def game():
             num = directionToNum(choice)
             move = mapMatrix[locCount][num]
             goto(move)
-            print(locationLength(locCount))
+
         else:
             messageSorter(choice)
 

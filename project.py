@@ -77,8 +77,6 @@ def initialize():
                       ,#9
                       ]
     
-    
-    global searchLocation
     searchLocation = ["There is a map on your desk. "
                       ,#0
                       "There is no item here. "
@@ -101,8 +99,6 @@ def initialize():
                       ,#9
                       ]
     
-
-
     global gameWon
     gameWon = False
 
@@ -137,8 +133,6 @@ def ending():
 def getCopyright():
     print("Copyright (c) 2107 Daniel Petruso, daniel.petruso1@marist.edu")
 
-
-
 def directionToNum(direction):
     change = {
         "north" : 0,
@@ -146,10 +140,6 @@ def directionToNum(direction):
         "east"  : 2,
         "west"  : 3}
     return change[direction]
-
-    
-#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
         
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -199,11 +189,6 @@ def game():
 
 def main():
     
-    win = GraphWin("window",400,300)
-    win.setCoords(0,0,10,10)
-    output = Text(Point(5,6), "XXXXXXXXXXX")
-    output.draw(win)
-
     intro()
     customize()
     initialize()

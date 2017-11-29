@@ -5,10 +5,11 @@ from player.py import *
 
 class Locale:
 
-    def __init__(self, shortLocation, longLocation, items):
+    def __init__(self, shortLocation, longLocation, items, moveableDirections):
         self.shortLocation = shrotLocation
         self.longLocation = longLocation
         self.items = items
+        self.moveableDirections = moveableDirections
         visited == False
         
 #make a loop that makes all locale objects in project.py
@@ -39,7 +40,11 @@ class Locale:
 
     def searchHere(self):
         print("Items: ", end="")
-        for i in range (0, len(items)):
+        for i in range (0, len(self.items)):
             print(self.items[i], end=" ")
         print()
 
+    def canMove(self, direct):
+        if moveableDirections != None:
+            return True
+        return False

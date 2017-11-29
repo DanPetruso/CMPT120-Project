@@ -5,21 +5,26 @@ from locale import *
 
 class Player:
     
-    def __init__(self, playerName, rivalName, points):
+    def __init__(self, playerName, rivalName, points, startingLocale):
         self.playerName = playerName
         self.rivalName = rivalName
         self.points = points
 
         self.inventory = []
+        self.locale = startingLocale
+        
 
 
 #change everything like locCount and make it just current Locale object
 #---------------------------------------------------------------------------------
 
+    def updateLocale(self, update):
+        self.locale = update
+        
     def getHelp(self):
         print("\nValid commands for the game are North, South, East, West, Look, Search, Take, Map, Pokeball, Package."
-          "\nNot all commands will work for all locations."
-          "\nType Help to review the commands and Quit to exit game.\n")
+              "\nNot all commands will work for all locations."
+              "\nType Help to review the commands and Quit to exit game.\n")
 
     def getErrorMessage(self):
         print("\nError. Invalid command.\n")
@@ -27,26 +32,24 @@ class Player:
     def getWrongWay(self):
         print("\nYou cannot move at that direction in this location.")
 
-    def getSearch(self):
-        print(searchLocation[locCount])
-
     def pointChecker(self, count):
-        global points
-        global visitedLocation
-        global pointGain
-        global locCount
-
         if count == -1: #gives total amount of points to user
-            print("\nTotal points: " + str(points))
+            print("\nTotal points: " + str(self.points))
 
         if visitedLocation[locCount] == False:
-            points += pointGain
+            self.points += 5
             visitedLocation[locCount] = True
 
     def getPoints(self):
         return pointChecker(-1)
 
-        def messageSorter(choice, item):
+    def checkForItem(check):
+        for i in range (0, self.inventory):
+            if inventory[i] == check:
+                return True
+        return False
+
+    def messageSorter(choice, item):
         global gameFinished
         global inventory
         global canUse
@@ -97,7 +100,7 @@ class Player:
         ##############-----------
 
         elif choice == "search":
-            getSearch()
+            Locale.searchHere()
 
         elif choice == "take":
             Locale.itemTake(item)

@@ -1,7 +1,7 @@
 #Dan Petruso
 #CMPT 120L 113
 
-from Locale import *
+from locale import *
 
 class Player:
     
@@ -10,81 +10,43 @@ class Player:
         self.rivalName = rivalName
         self.points = points
 
-        self.inventory = ["map", "pokeball", "package"]
-        self.canUse = [False, False, False]
+        self.inventory = []
 
 
-    def getHelp():
+#change everything like locCount and make it just current Locale object
+#---------------------------------------------------------------------------------
+
+    def getHelp(self):
         print("\nValid commands for the game are North, South, East, West, Look, Search, Take, Map, Pokeball, Package."
           "\nNot all commands will work for all locations."
           "\nType Help to review the commands and Quit to exit game.\n")
 
-    def getErrorMessage():
+    def getErrorMessage(self):
         print("\nError. Invalid command.\n")
 
-    def getWrongWay():
+    def getWrongWay(self):
         print("\nYou cannot move at that direction in this location.")
 
-    def getLongLocation():
-        global location
-        global locCount
-        print(location[locCount])
-
-    def getSearch():
-        global locCount
-        global searchLocation
+    def getSearch(self):
         print(searchLocation[locCount])
 
-    def takeItem():
-        global locCount
-        global canUse
-        if locCount == 0:
-            canUse[0] = True
-            print("You took the map.")
-        if locCount == 5:
-            canUse[1] = True
-            print("You took the pokeball.")
-        if locCount == 8:
-            canUse[2] = True
-            print("You took the package.")
-
-    def pointChecker(count):
+    def pointChecker(self, count):
         global points
         global visitedLocation
         global pointGain
         global locCount
 
-    if count == -1: #gives total amount of points to user
-        print("\nTotal points: " + str(points))
+        if count == -1: #gives total amount of points to user
+            print("\nTotal points: " + str(points))
 
-    if visitedLocation[locCount] == False:
-        points += pointGain
-        visitedLocation[locCount] = True
+        if visitedLocation[locCount] == False:
+            points += pointGain
+            visitedLocation[locCount] = True
 
-    def getPoints():
+    def getPoints(self):
         return pointChecker(-1)
 
-    def goto(counter):
-        if counter == None:
-            print("You cannot move in that direction here.")
-        else:
-            pointChecker(locCount)
-            locCount = counter
-            print(locationLength(locCount))
-            timer()
-
-    def timer():
-        global numOfMoves
-        global locCount
-        global gameFinished
-        numOfMoves+=1
-        print("Total number of moves:", numOfMoves)
-        if numOfMoves == 18:
-            print("You have been out for a long time and your mother wants you home.")
-            gameFinished = True
-
-
-    def messageSorter(choice):
+        def messageSorter(choice, item):
         global gameFinished
         global inventory
         global canUse
@@ -103,6 +65,8 @@ class Player:
         elif choice == "north" or choice.lower() == "south" or choice.lower() == "east" or choice.lower() == "west":
             getWrongWay()
 
+
+        #make a for loop that goes thru the inventory array to check for items
         elif choice == inventory[0]:#map
             if canUse[0] == True:
                 getMap()
@@ -130,17 +94,37 @@ class Player:
             else:
                 print("You cannot use that here.")
 
+        ##############-----------
+
         elif choice == "search":
             getSearch()
 
         elif choice == "take":
-            takeItem()
+            Locale.itemTake(item)
 
         elif choice == "look":
-            getLongLocation()
+            Locale.getLongLocation()
 
         else:
             getErrorMessage()
+
+#-------------------------------------------------------------------------------
+
+    def goto(counter):
+        if counter == None:
+            print("You cannot move in that direction here.")
+        else:
+            pointChecker(locCount)
+            locCount = counter
+            print(locationLength(locCount))
+            timer()
+
+    def timer():
+        numOfMoves+=1
+        print("Total number of moves:", numOfMoves)
+        if numOfMoves == 18:
+            print("You have been out for a long time and your mother wants you home.")
+            gameFinished = True
 
 
     def getMap():

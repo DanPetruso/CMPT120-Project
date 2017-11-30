@@ -1,27 +1,13 @@
 #Dan Petruso
 #CMPT 120L 113
-from graphics import *
+
+from player.py import *
+from locale.py import *
 
 def initialize():
-    global points
-    points = 0
 
-    global pointGain
-    pointGain = 5
 
-    global gameFinished
-    gameFinished = False
-
-    global locCount
-    locCount = 0
-
-    global numOfMoves
-    numOfMoves = 0
-
-    global playerName
-    global rivalName
-
-    location = [ "\nYou are now in your bedroom. You're bed is unmade and you're too lazy to make it. You see something on your desk."
+    LongLocation = [ "\nYou are now in your bedroom. You're bed is unmade and you're too lazy to make it. You see something on your desk."
                  "\nTo your east is the door to your living room. "
                  ,#0
                  "\nYou are now in your living room. Your mother is watching television and you're father is nowhere in site."
@@ -40,19 +26,27 @@ def initialize():
                  "\nYou are now in the research room and there are pokeballs everywhere."
                  "\nTo the south is the battle arena. \nTo the east is the lab. "
                  ,#5
-                 "\nYou entered the battle arena and " + rivalName + " would like to battle."
+                 "\nYou entered the battle arena and " + player.rivalName + " would like to battle."
                  "\nTo the west is the Pokemon Center. \nTo the north is the research room."
                  ,#6
-                 "\nYou arrived at the Pokemon Center and Nurse Joy healed your Pokemon. "
+                 "\nYou arrived at the Pokemon Center and Nurse Joy said there is a potion you can take. "
                  "You have to pick up a package for the professor at the PokeMart."
                  "\nTo the north is PokeMart. \nTo the east is the research room. "
                  ,#7
                  "\nYou arrived at the PokeMart and have to pick up the package. Professor Oak wants you "
-                 "to give it to him at " + rivalName + "'s house."
-                 "\nTo the west is " + rivalName + "'s house. \nTo the south is the Pokemon Center. "
+                 "to give it to him at " + player.rivalName + "'s house."
+                 "\nTo the west is " + player.rivalName + "'s house. \nTo the south is the Pokemon Center. "
                  ,#8
-                 "\nYou arrived at " + rivalName + "'s house and Professor Oak would like the package you were supposed to pick up."
-                 #9
+                 "\nYou arrived at " + player.rivalName + "'s house and Professor Oak would like the package you were supposed to pick up."
+                 "\nYou want to get to Viridian Forest to catch a Pikachu but you must get through Route One without encountering any other Pokemon."
+                 "\nTo the north is Route One. \nTo the east PokeMart"
+                 ,#9
+                 "\nYou just stepped onto Route One and Pokemon are everywhere. You do not want to any Pokemon to encounter you."
+                 "\nTo the north is Viridian Forest. To the south is " + player.rivalName + "'s house."
+                 ,#10
+                 "\nYou are in Viridian Forest and you see the Pikachu that you want to catch."
+                 "\nTo the south is Route One."
+                 #11
                  ]
 
     shortLocation = [ "\nYou are now in your bedroom. East is the door to your living room. "
@@ -71,80 +65,16 @@ def initialize():
                       ,#6
                       "\nYou are now in the Pokemon Center. North is PokeMart. East is research room. "
                       ,#7
-                      "\nYou are now in the PokeMart. West is " + rivalName + "'s house. South is Pokemon Center. "
+                      "\nYou are now in the PokeMart. West is " + player.rivalName + "'s house. South is Pokemon Center. "
                       ,#8
-                      "\nYou are at " + rivalName + "'s house. East is PokeMart. "
+                      "\nYou are at " + player.rivalName + "'s house. East is PokeMart. North is Route One."
                       ,#9
+                      "\nYou are now on Route One. South is " + player.rivalName + "'s house. North is Viridian Forest."
+                      ,#10
+                      "\nYou are now in Viridian Forest. South is Route One."
+                      #11
                       ]
-    
-    searchLocation = ["There is a map on your desk. "
-                      ,#0
-                      "There is no item here. "
-                      ,#1
-                      "There is no item here. "
-                      ,#2
-                      "There is no item here. "
-                      ,#3
-                      "There is no item here. "
-                      ,#4
-                      "There is a pokeball on the table that you can take. "
-                      ,#5
-                      "There is no item here. "
-                      ,#6
-                      "There is no item here. "
-                      ,#7
-                      "There is a package you need to pick up. "
-                      ,#8
-                      "There is no item here. "
-                      ,#9
-                      ]
-    
-    global gameWon
-    gameWon = False
 
-#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-def intro():
-    print("Choose Your Pokemon!")
-    print("This is a game where you will choose your first Pokemon and start your first battle.")
-    print("Every new move you will gain 5 points.")
-
-def customize():
-    global playerName
-    global rivalName
-    playerName = input("Professor Oak: 'Welcome to the world of Pokemon, what is your name?' ")
-
-    rivalName = input("Professor Oak: 'Hello " + playerName + ", this is my grandson and your rival, what was his name again?' ")
-    
-    print("Professor Oak: 'Oh yes, it was " + rivalName + ". Great! Now you have begun your journey!'\n ")
-
-    print("-------------------------------------------------------------------\n")
-
-def ending():
-    global gameWon
-    if gameWon == True:
-        print("Congrats! You won the game!")
-    elif gameWon == False:
-        print("Game Over! You didn't complete all the requirements.")
-    getCopyright()
-
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-def getCopyright():
-    print("Copyright (c) 2107 Daniel Petruso, daniel.petruso1@marist.edu")
-
-def directionToNum(direction):
-    change = {
-        "north" : 0,
-        "south" : 1,
-        "east"  : 2,
-        "west"  : 3}
-    return change[direction]
-        
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-def game():
-   
     mapMatrix = [   #  North       South       East        West
                     [  None,       None,       1,          None     ]    #Bedroom       0
                 ,   [  None,       2,          None,       0        ]    #Livingroom    1
@@ -155,22 +85,91 @@ def game():
                 ,   [  5,          None,       None,       7        ]    #Battle Arena  6
                 ,   [  8,          None,       6,          None     ]    #Pkmn Center   7
                 ,   [  None,       7,          None,       9        ]    #PokeMart      8
-                ,   [  None,       None,       8,          None     ]    #Rivals House  9
+                ,   [  10,         None,       8,          None     ]    #Rivals House  9
+                ,   [  11,         9,          None,       None     ]    #Route One     10
+                ,   [  None,       10,         None,       None     ]    #Viridian      11
                 ]
 
-    global playerName
-    global rivalName
-    global gameFinished
-    global locCount
+    defaultItemLocations = [
+                         ["map"       ]          #Bedroom        0
+                    ,    [            ]          #LivingRoom     1
+                    ,    [            ]          #Outside        2
+                    ,    [            ]          #Tall Grass     3
+                    ,    ["Charmanders Pokeball"]    #Oaks Lab       4
+                    ,    [            ]          #Research Room  5
+                    ,    [            ]          #Battle Arena   6
+                    ,    ["Potion"    ]          #Pkmn Center    7
+                    ,    ["Package", "Repel"]    #PokeMart       8
+                    ,    ["Empty Pokeball"  ]    #Rivals House   9
+                    ,    [            ]          #Route One      10
+                    ,    [            ]          #Viridian       11
+                    ]
+
+    usedItemMessages = [
+                            ""#0
+                        ,   ""#1
+                        ,   ""#2
+                        ,   ""#3
+                        ,   ""#4
+                        ,   ""#5
+                        ,   "You threw the pokeball and out came Charmander. You began your "
+                              "first battle against " + rivalName + "'s Squirtle."
+                              "\nSquirtle used tackle! Charmander used Scratch! Charmander won the battle! "
+                              "Charmander is now tired and would like to rest up at the Pokemon Center."#6
+                        ,   "You used the potion and healed your Charmander."#7
+                        ,   ""#8
+                        ,   "You gave Professor Oak the package and now he wants to give you something."#9
+                        ,   "You used the repel and now you can continue through Route One."#10
+                        ,   "You used the empty Pokeball and caught the Pikachu!"#11
+                        ]
+                            
+    
+    for i in range (0, 12):
+        
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+def intro():
+    print("Choose Your Pokemon!")
+    print("This is a game where you will choose your first Pokemon and start your first battle.")
+    print("Every new move you will gain 5 points.")
+
+def customize():
+    playerName = input("Professor Oak: 'Welcome to the world of Pokemon, what is your name?' ")
+
+    rivalName = input("Professor Oak: 'Hello " + playerName + ", this is my grandson and your rival, what was his name again?' ")
+    
+    print("Professor Oak: 'Oh yes, it was " + rivalName + ". Great! Now you have begun your journey!'\n ")
+
+    print("-------------------------------------------------------------------\n")
+    player = Player(playerName, rivalName, 0) 
+
+def ending():
+    global gameWon
+    if gameWon == True:
+        print("Congrats! You won the game!")
+    elif gameWon == False:
+        print("Game Over! You didn't complete all the requirements.")
+    getCopyright()
+
+def getCopyright():
+    print("Copyright (c) 2107 Daniel Petruso, daniel.petruso1@marist.edu")
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+def game():
+   
+    gameFinished = False
+    #locCount
     
     print(locationLength(locCount))
     
     while gameFinished == False:
 
-        if locCount == 9 and canUse[2] == False: #player loses game if they go to last location without item.
-            gameFinished = True
-            gameWon = False
-            break
+##        if locCount == 9 and canUse[2] == False: #player loses game if they go to last location without item.
+##            gameFinished = True
+##            gameWon = False
+##            break
 
         choice = input()
         choice = choice.lower()

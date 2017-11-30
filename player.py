@@ -1,23 +1,24 @@
 #Dan Petruso
 #CMPT 120L 113
 
-from locale import *
+from locale.py import *
 
 class Player:
     
-    def __init__(self, playerName, rivalName, points, startingLocale):
+    def __init__(self, playerName, rivalName, points):
         self.playerName = playerName
         self.rivalName = rivalName
         self.points = points
 
         self.inventory = []
-        self.locale = startingLocale
-        
 
 
 #change everything like locCount and make it just current Locale object
 #---------------------------------------------------------------------------------
 
+    def startingLocale(self, start):
+        self.locale = start
+        
     def updateLocale(self, update):
         self.locale = update
         
@@ -45,16 +46,12 @@ class Player:
 
     def checkForItem(check):
         for i in range (0, self.inventory):
-            if inventory[i] == check:
+            if self.inventory[i] == check:
                 return True
         return False
 
     def messageSorter(choice, item):
-        global gameFinished
-        global inventory
-        global canUse
-        global gameWon
-
+        
         if choice == "help":
             getHelp()
 
@@ -67,7 +64,6 @@ class Player:
 
         elif choice == "north" or choice.lower() == "south" or choice.lower() == "east" or choice.lower() == "west":
             getWrongWay()
-
 
         #make a for loop that goes thru the inventory array to check for items
         elif choice == inventory[0]:#map
@@ -132,12 +128,12 @@ class Player:
 
     def getMap():
         print("\nMap:\n"
-              "                           Bedroom ----- Living Room                    \n"
-              "                                               |                        \n"
-              "                                               |                        \n"
-              "                                   Outside of House ----- Tall Grass    \n"
-              "                                                                 |      \n"
-              "                                                                 |      \n"
+              "  Viridian Forest           Bedroom ----- Living Room                    \n"
+              "         |                                      |                        \n"
+              "         |                                      |                        \n"
+              "   Route One                       Outside of House ----- Tall Grass    \n"
+              "         |                                                       |      \n"
+              "         |                                                       |      \n"
               "   Rivals House ----- PokeMart           Research Room  ----- Oaks Lab  \n"
               "                        |		        |                          \n"
               "                        |  		        |                          \n"

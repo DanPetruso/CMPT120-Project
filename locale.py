@@ -5,11 +5,13 @@ from player.py import *
 
 class Locale:
 
-    def __init__(self, shortLocation, longLocation, items, moveableDirections):
-        self.shortLocation = shrotLocation
+    def __init__(self, shortLocation, longLocation, items, moveableDirections, itemUsed, usableItem):
+        self.shortLocation = shortLocation
         self.longLocation = longLocation
         self.items = items
         self.moveableDirections = moveableDirections
+        self.itemUsed = itemUsed
+        self.usableItem = usableItem
         visited == False
         
 #make a loop that makes all locale objects in project.py
@@ -21,9 +23,6 @@ class Locale:
             return self.longLocation
         else:
             return self.shortLocation
-
-    def getLongLocation(self):
-        return self.longLocation
 
     def itemDrop(self, itemToDrop):
         self.items.append(itemToDrop)
@@ -48,3 +47,9 @@ class Locale:
         if moveableDirections != None:
             return True
         return False
+
+    def useItem(self, item):
+        if item == usableItem:
+            print(itemUsed)
+        else:
+            print("You cannot use that item here.")

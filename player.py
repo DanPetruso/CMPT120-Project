@@ -1,7 +1,7 @@
 #Dan Petruso
 #CMPT 120L 113
 
-from locale.py import *
+from locale import *
 
 class Player:
     
@@ -16,11 +16,14 @@ class Player:
 #change everything like locCount and make it just current Locale object
 #---------------------------------------------------------------------------------
 
+    def getLocale(self):
+        return currentLocale
+
     def startingLocale(self, start):
-        self.locale = start
+        self.currentLocale = start
         
     def updateLocale(self, update):
-        self.locale = update
+        self.currentLocale = update
         
     def getHelp(self):
         print("\nValid commands for the game are North, South, East, West, Look, Search, Take, Map, Pokeball, Package."
@@ -37,20 +40,20 @@ class Player:
         if count == -1: #gives total amount of points to user
             print("\nTotal points: " + str(self.points))
 
-        if visitedLocation[locCount] == False:
+        if currentLocale.getVisited == False:
             self.points += 5
-            visitedLocation[locCount] = True
+            currentLocale.getVisited = True
 
     def getPoints(self):
         return pointChecker(-1)
 
-    def checkForItem(check):
+    def checkForItem(self, check):
         for i in range (0, self.inventory):
             if self.inventory[i] == check:
                 return True
         return False
 
-    def messageSorter(choice, item):
+    def messageSorter(self, choice, item):
         
         if choice == "help":
             getHelp()
@@ -65,44 +68,24 @@ class Player:
         elif choice == "north" or choice.lower() == "south" or choice.lower() == "east" or choice.lower() == "west":
             getWrongWay()
 
-        #make a for loop that goes thru the inventory array to check for items
-        elif choice == inventory[0]:#map
-            if canUse[0] == True:
-                getMap()
-            else:
-                print("You do not have the map yet.")
-
-        elif choice == inventory[1]:#pokeball
-            if canUse[1] == True and locCount == 6:
-                print("You threw the pokeball and out came Charmander. You began your "
-                      "first battle against " + rivalName + "'s Squirtle."
-                      "\nSquirtle used tackle! Charmander used Scratch! Charmander won the battle! "
-                      "Charmander is now tired and would like to rest up at the Pokemon Center.")
-            elif canUse[1] == False:
-                print("You do not have the pokeball yet.")
-            else:
-                print("You cannot use that in this location.")
-
-        elif choice == inventory[2]:#package
-            if canUse[2] == True and locCount == 9:
-                print("You delivered the package to Professor Oak. In return, he rewards you with a Pokedex.")
-                gameFinished = True
-                gameWon = True
-            elif canUse[2] == False:
-                print("You do not have the package yet.")
-            else:
-                print("You cannot use that here.")
-
-        ##############-----------
-
         elif choice == "search":
-            Locale.searchHere()
+            currentLocale.searchHere()
 
         elif choice == "take":
-            Locale.itemTake(item)
+            currentLocale.itemTake(item)
+
+        elif choice == "use":
+            if checkForItem(item) == True:
+                currentLocale.useItem(item)
+            else:
+                print("You have no such item.")
+
+        elif choice == "use" and item == "map":
+            if checkForItem("map") == True:
+                getMap()
 
         elif choice == "look":
-            Locale.getLongLocation()
+            currentLocale.getLongLocation()
 
         else:
             getErrorMessage()

@@ -1,11 +1,10 @@
 #Dan Petruso
 #CMPT 120L 113
 
-from player.py import *
-from locale.py import *
+from player import *
+from locale import *
 
-def initialize():
-
+def initialize(player):
 
     LongLocation = [ "\nYou are now in your bedroom. You're bed is unmade and you're too lazy to make it. You see something on your desk."
                  "\nTo your east is the door to your living room. "
@@ -95,12 +94,12 @@ def initialize():
                     ,    [            ]          #LivingRoom     1
                     ,    [            ]          #Outside        2
                     ,    [            ]          #Tall Grass     3
-                    ,    ["Charmanders Pokeball"]    #Oaks Lab       4
+                    ,    ["pokeball"  ]          #Oaks Lab       4
                     ,    [            ]          #Research Room  5
                     ,    [            ]          #Battle Arena   6
-                    ,    ["Potion"    ]          #Pkmn Center    7
-                    ,    ["Package", "Repel"]    #PokeMart       8
-                    ,    ["Empty Pokeball"  ]    #Rivals House   9
+                    ,    ["potion"    ]          #Pkmn Center    7
+                    ,    ["package", "repel"]    #PokeMart       8
+                    ,    ["masterball"]          #Rivals House   9
                     ,    [            ]          #Route One      10
                     ,    [            ]          #Viridian       11
                     ]
@@ -113,7 +112,7 @@ def initialize():
                         ,   ""#4
                         ,   ""#5
                         ,   "You threw the pokeball and out came Charmander. You began your "
-                              "first battle against " + rivalName + "'s Squirtle."
+                              "first battle against " + player.rivalName + "'s Squirtle."
                               "\nSquirtle used tackle! Charmander used Scratch! Charmander won the battle! "
                               "Charmander is now tired and would like to rest up at the Pokemon Center."#6
                         ,   "You used the potion and healed your Charmander."#7
@@ -122,10 +121,29 @@ def initialize():
                         ,   "You used the repel and now you can continue through Route One."#10
                         ,   "You used the empty Pokeball and caught the Pikachu!"#11
                         ]
+
+    usableItem = [
+                    ""#0
+                 ,  ""#1
+                 ,  ""#2
+                 ,  ""#3
+                 ,  ""#4
+                 ,  ""#5
+                 ,  "pokeball"#6
+                 ,  "potion"#7
+                 ,  ""#8
+                 ,  "package"#9
+                 ,  "repel"#10
+                 ,  "masterball"#11
+                 ]
+                    
                             
-    
+    localeList = []
     for i in range (0, 12):
-        
+        localeList.append( Locale(shortLocation[i], longLocation[i], defaultItemLocations[i],
+                                  mapMatrix[i], usedItemMessages[i], usableItem[i]))
+
+    return localeList
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -142,10 +160,9 @@ def customize():
     print("Professor Oak: 'Oh yes, it was " + rivalName + ". Great! Now you have begun your journey!'\n ")
 
     print("-------------------------------------------------------------------\n")
-    player = Player(playerName, rivalName, 0) 
+    return Player(playerName, rivalName, 0) 
 
 def ending():
-    global gameWon
     if gameWon == True:
         print("Congrats! You won the game!")
     elif gameWon == False:
@@ -157,31 +174,28 @@ def getCopyright():
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-def game():
+def game(player, localeList):
    
     gameFinished = False
     #locCount
     
-    print(locationLength(locCount))
+    currentLocale = player.getLocale()
+    print(currentLocale.locationLength())
     
     while gameFinished == False:
-
-##        if locCount == 9 and canUse[2] == False: #player loses game if they go to last location without item.
-##            gameFinished = True
-##            gameWon = False
-##            break
-
+        
         choice = input()
         choice = choice.lower()
         choice = choice.strip()
         
+        
         if choice == "north" or choice == "south" or choice == "east" or choice == "west":
-            num = directionToNum(choice)
+            num = player.directionToNum(choice)
             move = mapMatrix[locCount][num]
             goto(move)
 
         else:
-            messageSorter(choice)
+            player.messageSorter(choice)
 
                 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -189,9 +203,9 @@ def game():
 def main():
     
     intro()
-    customize()
-    initialize()
-    game()
+    player = customize()
+    localeList = initialize(player)
+    game(player, localeList)
     ending()
     
 main()

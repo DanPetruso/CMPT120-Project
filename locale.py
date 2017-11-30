@@ -1,7 +1,7 @@
 #Dan Petruso
 #CMPT 120L 113
 
-from player.py import *
+from player import *
 
 class Locale:
 
@@ -23,6 +23,9 @@ class Locale:
             return self.longLocation
         else:
             return self.shortLocation
+
+    def getVisited(self):
+        return self.visited
 
     def itemDrop(self, itemToDrop):
         self.items.append(itemToDrop)
@@ -49,7 +52,7 @@ class Locale:
         return False
 
     def useItem(self, item):
-        if item == usableItem:
-            print(itemUsed)
+        if item == self.usableItem:
+            print(self.itemUsed)
         else:
             print("You cannot use that item here.")

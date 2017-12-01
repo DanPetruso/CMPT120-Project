@@ -94,8 +94,8 @@ def initialize(playerName, rivalName):
                     ,    [            ]          #LivingRoom     1
                     ,    [            ]          #Outside        2
                     ,    [            ]          #Tall Grass     3
-                    ,    ["pokeball"  ]          #Oaks Lab       4
-                    ,    [            ]          #Research Room  5
+                    ,    [            ]          #Oaks Lab       4
+                    ,    ["pokeball"  ]          #Research Room  5
                     ,    [            ]          #Battle Arena   6
                     ,    ["potion"    ]          #Pkmn Center    7
                     ,    ["package", "repel"]    #PokeMart       8
@@ -119,7 +119,7 @@ def initialize(playerName, rivalName):
                         ,   ""#8
                         ,   "You gave Professor Oak the package and now he wants to give you something."#9
                         ,   "You used the repel and now you can continue through Route One."#10
-                        ,   "You used the empty Pokeball and caught the Pikachu!"#11
+                        ,   "You used the masterball and caught the Pikachu! Congrats, you won!"#11
                         ]
 
     usableItem = [
@@ -179,13 +179,13 @@ def getCopyright():
 def game(player, localeList):
    
     gameFinished = False
-    #locCount
     
     currentLocale = player.getLocale()
+    print(player.currentLocale.locationLength())
+    move = 0
     
-    while gameFinished == False:
+    while player.gameFinished == False:
         
-        print(currentLocale.locationLength())
         choice = input()
         choice = choice.lower()
         choice = choice.strip()
@@ -196,11 +196,22 @@ def game(player, localeList):
         
         if choice[0] == "north" or choice[0] == "south" or choice[0] == "east" or choice[0] == "west":
             num = player.directionToNum(choice[0])
-            move = player.goto(num)
-            player.updateLocale(localeList[move])
+            moveNext = player.canMove(num)
+            if moveNext != None:
+                if player.currentLocale.itemUsedFlag == False and moveNext > move:
+                    print("You must use an item first.")
+                else:
+                    move = moveNext
+                    currentLocale = player.updateLocale(localeList[move])
+                    player.pointChecker()
+                    print("Total points:", player.getPoints())
+                    print(player.currentLocale.locationLength())
 
         else:
             player.messageSorter(choice[0], choice[1])
+
+    if player.gameWon = False:
+        print("You lost the game. Better luck next time.")
 
                 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------

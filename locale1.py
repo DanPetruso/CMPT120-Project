@@ -9,20 +9,28 @@ class Locale:
         self.items = items
         self.moveableDirections = moveableDirections
         self.itemUsed = itemUsed
+        
         self.usableItem = usableItem
         self.visited = False
+        self.wasSearched = False
+
+        #makes sure user uses an item to progress only when there is an item to use
+        if usableItem == "" or usableItem == "map":
+            self.itemUsedFlag = True
+        else:
+            self.itemUsedFlag = False
         
 #--------------------------------------------------------------------
 
     def locationLength(self):
         if self.visited == False:
-            self.visited == True
+            self.visited = True
             return self.longLocation
         else:
             return self.shortLocation
 
     def getLongLocation(self):
-        return self.longLocation\
+        return self.longLocation
                
     def getMoveableDirections(self):
         return self.moveableDirections
@@ -30,21 +38,21 @@ class Locale:
     def getVisited(self):
         return self.visited
 
-    def itemDrop(self, itemToDrop):
-        self.items.append(itemToDrop)
+    def itemDrop(self, itemDroppedHere):
+        self.items.append(itemDroppedHere)
 
     def itemTake(self, itemToTake, Player):
         itemToTake = itemToTake.lower()
         itemToTake = itemToTake.strip()
         for i in range (0, len(self.items)):
             if self.items[i] == itemToTake:
-                return True
-                print(itemToTake + " has been added to your inventory.")
+                return True                
             else:
                 print("There is no such item here.")
         return False
 
     def searchHere(self):
+        self.wasSearched = True
         print("Items: ", end="")
         for i in range (0, len(self.items)):
             print(self.items[i], end=" ")
@@ -58,5 +66,6 @@ class Locale:
     def useItem(self, item):
         if item == self.usableItem:
             print(self.itemUsed)
+            self.itemUsedFlag = True
         else:
             print("You cannot use that item here.")

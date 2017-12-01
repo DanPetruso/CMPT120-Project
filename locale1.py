@@ -47,8 +47,6 @@ class Locale:
         for i in range (0, len(self.items)):
             if self.items[i] == itemToTake:
                 return True                
-            else:
-                print("There is no such item here.")
         return False
 
     def searchHere(self):

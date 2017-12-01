@@ -10,7 +10,6 @@ class Player:
         self.numOfMoves = 0
         self.points = 0
         self.gameFinished = False
-        self.gameWon = False
 
         self.inventory = []
 
@@ -70,6 +69,8 @@ class Player:
                     print("You obtained the " + item + "!")
                     index = self.currentLocale.items.index(item)
                     self.currentLocale.items.pop(index)
+                else:
+                    print("There is no such item here.")
 
         elif choice == "use" and item == "map":
             if self.checkForItem("map") == True:
@@ -122,8 +123,7 @@ class Player:
         print("Total number of moves:", self.numOfMoves)
         if self.numOfMoves == 25:
             print("You have been out for a long time and your mother wants you home.")
-            self.gameFinished = False
-            self.gameWon = False
+            self.gameFinished = True
             
 
 

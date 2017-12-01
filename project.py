@@ -165,10 +165,7 @@ def customize():
     return playerName, rivalName
 
 def ending():
-    if gameWon == True:
-        print("Congrats! You won the game!")
-    elif gameWon == False:
-        print("Game Over! You didn't complete all the requirements.")
+    print("Thank you for playing!")
     getCopyright()
 
 def getCopyright():
@@ -184,7 +181,7 @@ def game(player, localeList):
     print(player.currentLocale.locationLength())
     move = 0
     
-    while player.gameFinished == False:
+    while player.gameFinished == False and localeList[11].itemUsedFlag == False:
         
         choice = input()
         choice = choice.lower()
@@ -210,7 +207,7 @@ def game(player, localeList):
         else:
             player.messageSorter(choice[0], choice[1])
 
-    if player.gameWon = False:
+    if localeList[11].itemUsedFlag == False:
         print("You lost the game. Better luck next time.")
 
                 

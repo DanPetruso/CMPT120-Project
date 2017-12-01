@@ -1,12 +1,12 @@
 #Dan Petruso
 #CMPT 120L 113
 
+from locale1 import *
 from player import *
-from locale import *
 
-def initialize(player):
+def initialize(playerName, rivalName):
 
-    LongLocation = [ "\nYou are now in your bedroom. You're bed is unmade and you're too lazy to make it. You see something on your desk."
+    longLocation = [ "\nYou are now in your bedroom. You're bed is unmade and you're too lazy to make it. You see something on your desk."
                  "\nTo your east is the door to your living room. "
                  ,#0
                  "\nYou are now in your living room. Your mother is watching television and you're father is nowhere in site."
@@ -25,7 +25,7 @@ def initialize(player):
                  "\nYou are now in the research room and there are pokeballs everywhere."
                  "\nTo the south is the battle arena. \nTo the east is the lab. "
                  ,#5
-                 "\nYou entered the battle arena and " + player.rivalName + " would like to battle."
+                 "\nYou entered the battle arena and " + rivalName + " would like to battle."
                  "\nTo the west is the Pokemon Center. \nTo the north is the research room."
                  ,#6
                  "\nYou arrived at the Pokemon Center and Nurse Joy said there is a potion you can take. "
@@ -33,15 +33,15 @@ def initialize(player):
                  "\nTo the north is PokeMart. \nTo the east is the research room. "
                  ,#7
                  "\nYou arrived at the PokeMart and have to pick up the package. Professor Oak wants you "
-                 "to give it to him at " + player.rivalName + "'s house."
-                 "\nTo the west is " + player.rivalName + "'s house. \nTo the south is the Pokemon Center. "
+                 "to give it to him at " + rivalName + "'s house."
+                 "\nTo the west is " + rivalName + "'s house. \nTo the south is the Pokemon Center. "
                  ,#8
-                 "\nYou arrived at " + player.rivalName + "'s house and Professor Oak would like the package you were supposed to pick up."
+                 "\nYou arrived at " + rivalName + "'s house and Professor Oak would like the package you were supposed to pick up."
                  "\nYou want to get to Viridian Forest to catch a Pikachu but you must get through Route One without encountering any other Pokemon."
                  "\nTo the north is Route One. \nTo the east PokeMart"
                  ,#9
                  "\nYou just stepped onto Route One and Pokemon are everywhere. You do not want to any Pokemon to encounter you."
-                 "\nTo the north is Viridian Forest. To the south is " + player.rivalName + "'s house."
+                 "\nTo the north is Viridian Forest. To the south is " + rivalName + "'s house."
                  ,#10
                  "\nYou are in Viridian Forest and you see the Pikachu that you want to catch."
                  "\nTo the south is Route One."
@@ -64,11 +64,11 @@ def initialize(player):
                       ,#6
                       "\nYou are now in the Pokemon Center. North is PokeMart. East is research room. "
                       ,#7
-                      "\nYou are now in the PokeMart. West is " + player.rivalName + "'s house. South is Pokemon Center. "
+                      "\nYou are now in the PokeMart. West is " + rivalName + "'s house. South is Pokemon Center. "
                       ,#8
-                      "\nYou are at " + player.rivalName + "'s house. East is PokeMart. North is Route One."
+                      "\nYou are at " + rivalName + "'s house. East is PokeMart. North is Route One."
                       ,#9
-                      "\nYou are now on Route One. South is " + player.rivalName + "'s house. North is Viridian Forest."
+                      "\nYou are now on Route One. South is " + rivalName + "'s house. North is Viridian Forest."
                       ,#10
                       "\nYou are now in Viridian Forest. South is Route One."
                       #11
@@ -112,7 +112,7 @@ def initialize(player):
                         ,   ""#4
                         ,   ""#5
                         ,   "You threw the pokeball and out came Charmander. You began your "
-                              "first battle against " + player.rivalName + "'s Squirtle."
+                              "first battle against " + rivalName + "'s Squirtle."
                               "\nSquirtle used tackle! Charmander used Scratch! Charmander won the battle! "
                               "Charmander is now tired and would like to rest up at the Pokemon Center."#6
                         ,   "You used the potion and healed your Charmander."#7
@@ -143,13 +143,15 @@ def initialize(player):
         localeList.append( Locale(shortLocation[i], longLocation[i], defaultItemLocations[i],
                                   mapMatrix[i], usedItemMessages[i], usableItem[i]))
 
-    return localeList
+    player = Player(playerName, rivalName, localeList[0])
+
+    return localeList, player
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def intro():
     print("Choose Your Pokemon!")
-    print("This is a game where you will choose your first Pokemon and start your first battle.")
+    print("This is a game where you will catch your first Pokemon.")
     print("Every new move you will gain 5 points.")
 
 def customize():
@@ -160,7 +162,7 @@ def customize():
     print("Professor Oak: 'Oh yes, it was " + rivalName + ". Great! Now you have begun your journey!'\n ")
 
     print("-------------------------------------------------------------------\n")
-    return Player(playerName, rivalName, 0) 
+    return playerName, rivalName
 
 def ending():
     if gameWon == True:
@@ -180,22 +182,25 @@ def game(player, localeList):
     #locCount
     
     currentLocale = player.getLocale()
-    print(currentLocale.locationLength())
     
     while gameFinished == False:
         
+        print(currentLocale.locationLength())
         choice = input()
         choice = choice.lower()
         choice = choice.strip()
+        choice = choice.split(" ")
         
+        if len(choice) == 1:
+            choice.append("")
         
-        if choice == "north" or choice == "south" or choice == "east" or choice == "west":
-            num = player.directionToNum(choice)
-            move = mapMatrix[locCount][num]
-            goto(move)
+        if choice[0] == "north" or choice[0] == "south" or choice[0] == "east" or choice[0] == "west":
+            num = player.directionToNum(choice[0])
+            move = player.goto(num)
+            player.updateLocale(localeList[move])
 
         else:
-            player.messageSorter(choice)
+            player.messageSorter(choice[0], choice[1])
 
                 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -203,8 +208,8 @@ def game(player, localeList):
 def main():
     
     intro()
-    player = customize()
-    localeList = initialize(player)
+    playerName, rivalName = customize()
+    localeList, player = initialize(playerName, rivalName)
     game(player, localeList)
     ending()
     

@@ -181,6 +181,11 @@ def customize():
 
 def ending():
     print("Thank you for playing!")
+    playAgain = input("Would you like to play again? (yes or no)")
+    playAgain = playAgain.lower()
+    if playAgain == "yes":
+        main()
+    
     getCopyright()
 
 def getCopyright():

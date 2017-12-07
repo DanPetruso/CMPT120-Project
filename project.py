@@ -136,12 +136,27 @@ def initialize(playerName, rivalName):
                  ,  "repel"#10
                  ,  "masterball"#11
                  ]
+
+    askForLocations = [
+                         "You don't need to do anything special here."#0
+                      ,  "You don't need to do anything special here."#1
+                      ,  "You don't need to do anything special here."#2
+                      ,  "You don't need to do anything special here."#3
+                      ,  "You don't need to do anything special here."#4
+                      ,  "You don't need to do anything special here."#5
+                      ,  "You need to send out your Pokemon."#6
+                      ,  "You need to heal your Charmander."#7
+                      ,  "You don't need to do anything special here."#8
+                      ,  "You need to give Professor Oak the package."#9
+                      ,  "You need to use an item that repels Pokemon."#10
+                      ,  "You need to catch the Pikachu whitout fail."#11
+                      ]
                     
                             
     localeList = []
     for i in range (0, 12):
         localeList.append( Locale(shortLocation[i], longLocation[i], defaultItemLocations[i],
-                                  mapMatrix[i], usedItemMessages[i], usableItem[i]))
+                                  mapMatrix[i], usedItemMessages[i], usableItem[i], askForLocations[i]))
 
     player = Player(playerName, rivalName, localeList[0])
 

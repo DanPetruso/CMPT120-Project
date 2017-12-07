@@ -72,6 +72,9 @@ class Player:
                 else:
                     print("There is no such item here.")
 
+        elif choice == "ask":
+            print(self.currentLocale.ask)
+
         elif choice == "use" and item == "map":
             if self.checkForItem("map") == True:
                 self.getMap()

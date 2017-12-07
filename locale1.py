@@ -3,12 +3,13 @@
 
 class Locale:
 
-    def __init__(self, shortLocation, longLocation, items, moveableDirections, itemUsed, usableItem):
+    def __init__(self, shortLocation, longLocation, items, moveableDirections, itemUsed, usableItem, ask):
         self.shortLocation = shortLocation
         self.longLocation = longLocation
         self.items = items
         self.moveableDirections = moveableDirections
         self.itemUsed = itemUsed
+        self.ask = ask
         
         self.usableItem = usableItem
         self.visited = False

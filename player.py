@@ -48,7 +48,7 @@ class Player:
             self.getHelp()
 
         elif choice == "quit":
-            gameFinished = True
+            self.gameFinished = True
             print("You just quit the game.")
 
         elif choice == "points":
